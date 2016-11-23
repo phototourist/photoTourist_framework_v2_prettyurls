@@ -1,18 +1,16 @@
 <?php
-/*
-	$path=$_SERVER['DOCUMENT_ROOT'].'/products_ORM_pagination_autocomplete/';
-   define('SITE_ROOT', $path);
-   define('MODEL_PATH',SITE_ROOT.'model/');
-*/
-    class Conf {
+
+
+    class Conf
+    {
         private $_userdb;
         private $_passdb;
         private $_hostdb;
         private $_db;
-        static $_instance;
+        public static $_instance;
 
-        private function __construct() {
-            $cnfg = parse_ini_file(MODEL_PATH."bd.ini");
+        private function __construct(){
+            $cnfg = parse_ini_file(MODEL_PATH.'bd.ini');
             $this->_userdb = $cnfg['user'];
             $this->_passdb = $cnfg['password'];
             $this->_hostdb = $cnfg['host'];

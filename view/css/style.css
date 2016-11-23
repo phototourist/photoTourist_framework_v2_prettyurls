@@ -16,6 +16,7 @@ body a{
 	-o-transition: 0.5s all ease;
 	-ms-transition: 0.5s all ease;
 }
+
 h1,h2,h3,h4,h5,h6{
 	margin:0;
 }
@@ -122,7 +123,7 @@ a.boxclose {
   	right: 9em;
 }
 .menu_box_list li a:hover,.menu_box_list li a.active{
-	color:#e11a27;
+	color:#006666;
 	text-decoration: none;
 	background:none;
 }
@@ -251,7 +252,7 @@ ul.button li a:hover{
 /*-header--*/
 /*-banner--*/
 .banner {
-  	background: url(../images/banner.jpg) no-repeat;
+  	background: url('../images/banner.png') no-repeat;
   	background-size: 100% 100%;
   	-webkit-background-size: 100% 100%;
   	-moz-background-size: 100% 100%;
@@ -290,6 +291,13 @@ ul.button li a:hover{
 	-o-border-radius: 10px;
 	-ms-border-radius: 10px;
 }
+
+.btn-primary.centrado{
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .btn-primary:hover,.t-btn a:hover,
 .ad-btn a:hover,.error-btn a:hover{
 	background:#ffd200;
@@ -531,7 +539,7 @@ ul.button li a:hover{
 }
 
 .next {
-  	/*margin: 2.5% 0 0 35%;*/
+  	margin: 2.5% 0 0 35%;
 }
 .next a {
   	color: #000;
@@ -616,12 +624,12 @@ ul.button li a:hover{
 /*--footer--*/
 /*--footer--*/
 .footer{
-	background:#ffd200;
+	background:#006666;
 	padding:3em 0px;
 }
 .footer-one ul{
   	padding: 10% 0 0 0;
-  	border-top: 1px solid #000;
+  	border-top: 1px solid #fff;
   	width: 85%;
 }
 .footer-one ul li{
@@ -629,7 +637,7 @@ ul.button li a:hover{
 	margin-top:6px;
 }
 .footer-one ul li a {
-  	color: #000;
+  	color: #fff;
   	font-size: 16px;
   	font-weight: 600;
 }
@@ -663,7 +671,7 @@ ul.button li a:hover{
 	background-position:-50px -25px;
 }
 .footer-right ul {
-  	border-top: 1px solid #000;
+  	border-top: 1px solid #fff;
   	padding: 18% 0 25% 0;
 }
 .footer-two {
@@ -675,16 +683,17 @@ ul.button li a:hover{
 	text-align:center;
 }
 .footer-bottom p{
-	color:#000;
+	color:#fff;
 	font-size:15px;
 	font-weight:600;
 }
 .footer-bottom p a{
-	color:#000;
+	color:#fff;
 }
 .footer-bottom p a:hover,.footer-one ul li a:hover,
 .term-bottom p a:hover,.next a:hover,.s-btn a:hover{
-	color:#e11a27;
+	color:#ffd200;
+>>>>>>> e77c53ae7eea3e50668a969ea043c44782698152
 	transition: 0.5s all ease;
 	-webkit-transition: 0.5s all ease;
 	-moz-transition: 0.5s all ease;
@@ -1441,6 +1450,12 @@ a.boxclose {
 }
 .jumbotron h1 {
   	font-size: 2.6em;
+}
+.jumbotron h1.textBanner {
+  	font-size: 2.6em;
+    /*color: #ffd200;*/
+    color: black;
+    text-shadow: 3px 2px 1px white;
 }
 .banner {
   	min-height: 470px;

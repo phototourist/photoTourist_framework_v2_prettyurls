@@ -26,9 +26,10 @@
 												<li><a href="about.html"><span>About us</span></a></li>
 												<li><a href="careers.html"><span>Careers</span></a></li>
 												<li><a href="404.html"><span>Help</span></a></li>
+												<li><a href="<?php amigable('?module=users&function=form_users'); ?>"><span>Users</span></a></li>
 												<li><a href="<?php amigable('?module=productsfe&function=list_products'); ?>">List products</a></li>
 												<li><a href="blog.html"><span>Blog</span></a></li>
-											<li><a href="<?php amigable('?module=contact&function=view_contact'); ?>"><span>CONTACT</span></a></li>
+												<li><a href="<?php amigable('?module=contact&function=view_contact'); ?>"><span>CONTACT</span></a></li>
 												<div class="clearfix"> </div>
 											</ul>
 										</div>

@@ -107,12 +107,16 @@ function showErrorPage($code = 0, $message = "", $http = "", $num_http = 0) {
             $jsondata["error"] = $message;
             //header($http, true, $num_http);
             echo json_encode($jsondata);
+
             exit;
             break;
         case 3:
             paint_template_search($message);
-            exit;
+            die();
             break;
+        case 4:
+        //AQUI creo que hay que hacer el ERROR 404
+        break;
     }
 }
 

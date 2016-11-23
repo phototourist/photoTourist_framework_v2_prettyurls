@@ -1,4 +1,5 @@
 RewriteEngine on
+<<<<<<< HEAD
 RewriteBase /photoTourist_framework_v2_prettyurls/
 
 RewriteCond %{REQUEST_FILENAME} !-f

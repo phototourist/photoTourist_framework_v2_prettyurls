@@ -7,7 +7,7 @@
     define('SITE_PATH', '/photoTourist_framework_v2_prettyurls/');
 
 		//CSS
-		define('CSS_PATH', 'http://' . $_SERVER['HTTP_HOST'] . SITE_PATH . 'view/css/');
+		define('CSS_PATH', SITE_PATH . 'view/css/');
 
 
 		//JS
@@ -45,14 +45,13 @@
     //utils
     define('UTILS',SITE_ROOT.'utils/');
 
-    //model users
-    define('FUNCTIONS_USERS',SITE_ROOT.'modules/users/utils/');
-    define('MODEL_PATH_USERS',SITE_ROOT.'modules/users/model/');
-    define('DAO_USERS',SITE_ROOT.'modules/users/model/DAO/');
-    define('BLL_USERS',SITE_ROOT.'modules/users/model/BLL/');
-    define('MODEL_USERS',SITE_ROOT.'modules/users/model/model/');
-    define('USERS_JS_PATH', SITE_PATH . 'modules/users/view/js/');
-		define('USERS_CSS_PATH', SITE_PATH . 'modules/users/view/css/');
+		//model users
+	  define('FUNCTIONS_USERS', SITE_ROOT.'modules/users/utils/');
+	  define('MODEL_PATH_USERS', SITE_ROOT.'modules/users/model/');
+	  define('DAO_USERS', SITE_ROOT.'modules/users/model/DAO/');
+	  define('BLL_USERS', SITE_ROOT.'modules/users/model/BLL/');
+	  define('MODEL_USERS', SITE_ROOT.'modules/users/model/model/');
+	  define('USERS_JS_PATH', SITE_PATH.'modules/users/view/js/');
 
     //model products
 		define('FUNCTIONS_PRODUCTS',SITE_ROOT.'modules/productsfe/utils/');

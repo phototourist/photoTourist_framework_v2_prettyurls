@@ -3,10 +3,10 @@
 	<div class="container">
 		<div class="banner-top">
 			<div class="jumbotron">
-					<h1>CREATE YOUR OWN PHOTOSTORY</h1>
-					<p>Make your photobook online</p>
+					<h1 class="textBanner">TUS FOTOS DE VIAJE SERÁN DIFERENTES</h1>
+					<p>PhotoTourist: Tu maleta de recuerdos</p>
 					<div class="banner-btn">
-						<a class="btn btn-primary btn-lg" href="#" role="button">make your photobook</a>
+						<a class="btn btn-primary btn-lg" href="#" role="button">Regístrate Gratis</a>
 				</div>
 			</div>
 		</div>
@@ -19,22 +19,21 @@
 		<div class="services-top">
 			<div class="col-md-3 services-left">
 				<img src="<?php echo IMG_PATH ?>service-1.png" alt="" />
-				<p>Download photos</p>
-				<span class="s-one"> </span>
+				<p>Localiza a las CamTourist</p>
 			</div>
 			<div class="col-md-3 services-left">
 				<img src="<?php echo IMG_PATH ?>service-2.png" alt="" />
-				<p>Design your photobook</p>
+				<p>Muestra tu Código Qr</p>
 				<span class="s-two"> </span>
 			</div>
 			<div class="col-md-3 services-left">
 				<img src="<?php echo IMG_PATH ?>service-3.png" alt="" />
-				<p>Pay for service</p>
+				<p>Ahora Sonríe!!</p>
 				<span class="s-tre"> </span>
 			</div>
 			<div class="col-md-3 services-left">
-				<img src="view/images/service-4.png" alt="" />
-				<p>Get your photobook</p>
+				<img src="<?php echo IMG_PATH ?>service-4.png" alt="" />
+				<p>Descarga tus Fotos</p>
 			</div>
 			<div class="clearfix"> </div>
 		</div>
@@ -51,7 +50,7 @@
 			<div class="row">
 					<div class="col-md-4">
 						<div class="thumbnail">
-								<img src="view/images/ad-1.png" alt="" />
+								<img src="<?php echo IMG_PATH ?>ad-1.png" alt="" />
 									<div class="caption">
 										<h3>Import photos from</h3>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ora incidunt ut labore.</p>
@@ -60,7 +59,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="thumbnail">
-								<img src="view/images/ad-2.png" alt="" />
+								<img src="<?php echo IMG_PATH ?>ad-2.png" alt="" />
 									<div class="caption">
 										<h3>Photo editing</h3>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ora incidunt ut labore.</p>
@@ -69,7 +68,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="thumbnail">
-								<img src="view/images/ad-3.png" alt="" />
+								<img src="<?php echo IMG_PATH ?>ad-3.png" alt="" />
 									<div class="caption">
 										<h3>Templates</h3>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing. Ut enim ad minim, nostrud exercitation ullamco laboris nisi ut aliquip ex commodo.</p>
@@ -80,7 +79,7 @@
 			</div>
 		</div>
 		<div class="ad-btn">
-			<a href="#">make your photobook</a>
+			<a href="#">Regístrate Gratis</a>
 		</div>
 	</div>
 </div>
@@ -101,7 +100,7 @@
 							<li><img src="<?php echo IMG_PATH ?>correct.png" alt="" /> <p>12 pages</p></li>
 							<li><img src="<?php echo IMG_PATH ?>correct.png" alt="" /> <p>binding on the clip</p></li>
 						</ul>
-						<h5><img src="view/images/dolor.png" class="dolor" alt="" />129</h5>
+						<h5><img src="<?php echo IMG_PATH ?>dolor.png" class="dolor" alt="" />129</h5>
 					</div>
 					<div class="s-btn">
 						<a href="#">Make your LightBook</a>
@@ -134,7 +133,7 @@
 							<li><img src="<?php echo IMG_PATH ?>correct.png" alt="" /> <p>12 pages</p></li>
 							<li><img src="<?php echo IMG_PATH ?>correct.png" alt="" /> <p>binding on the clip</p></li>
 						</ul>
-						<h5><img src="view/images/dolor.png" class="dolor" alt="" />759</h5>
+						<h5><img src="<?php echo IMG_PATH ?>dolor.png" class="dolor" alt="" />759</h5>
 					</div>
 					<div class="s-btn">
 						<a href="#">Make your LightBook</a>
@@ -153,7 +152,7 @@
 			<h3><span>T</span>estimonials</h3>
 		</div>
 		<div class="testimonials-bottom">
-			<img src="view/images/test-1.png" alt="" />
+			<img src="<?php echo IMG_PATH ?>test-1.png" alt="" />
 			<div class="test-text">
 				<h4>John Doe</h4>
 				<p>Wedding photographer</p>
@@ -166,7 +165,7 @@
 				</div>
 			</div>
 			<div class="t-btn">
-				<a href="#">make your photobook</a>
+				<a href="#">Regístrate Gratis</a>
 			</div>
 		</div>
 	</div>
@@ -211,7 +210,7 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="ad-btn term-btn">
-			<a href="#">make your photobook</a>
+			<a href="#">Regístrate Gratis</a>
 		</div>
 	</div>
 </div>

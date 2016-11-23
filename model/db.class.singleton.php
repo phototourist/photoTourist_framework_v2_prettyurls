@@ -7,9 +7,10 @@
         private $link;
         private $stmt;
         private $array;
-        static $_instance;
+        public static $_instance;
 
-        private function __construct() {
+        private function __construct()
+        {
             $this->setConexion();
             $this->conectar();
         }
@@ -24,6 +25,7 @@
             $this->password = $conf->getPassDB();
             */
             //Millora
+
             $this->servidor = $conf->_hostdb;
             $this->base_datos = $conf->_db;
             $this->usuario = $conf->_userdb;
@@ -41,9 +43,11 @@
         }
 
         private function conectar() {
+
             $this->link = new mysqli($this->servidor, $this->usuario, $this->password);
             $this->link->select_db($this->base_datos);
         }
+
 
         public function ejecutar($sql) {
             $this->stmt = $this->link->query($sql);
@@ -57,5 +61,6 @@
             }
             return $this->array;
         }
+
 
     }
