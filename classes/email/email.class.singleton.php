@@ -94,8 +94,8 @@
 
         public function send_mailgun($email){
         	$config = array();
-        	$config['api_key'] = "key-b6b2d09d9a7a7215709d67e6918de314"; //API Key
-        	$config['api_url'] = "https://api.mailgun.net/v3/sandboxbcb7641c31de48ff8a2d64c8eef54ab6.mailgun.org/messages"; //API Base URL
+        	$config['api_key'] = "key-217d2d59d6b756df9fd3f281852641d6"; //API Key
+        	$config['api_url'] = "https://api.mailgun.net/v3/sandbox3574edadfd704d0fab8cea01ad962685.mailgun.org/messages"; //API Base URL
 
         	$message = array();
         	$message['from'] =  "phototourist.contact@gmail.com";

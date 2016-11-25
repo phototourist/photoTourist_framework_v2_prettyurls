@@ -32,13 +32,13 @@
 								);
 				set_error_handler('ErrorHandler');
 				try{
-
+/*
                     if (enviar_email($arrArgument)){
                         echo "<div class='alert alert-success'>Your message has been sent </div>";
                     } else {
                         echo "<div class='alert alert-error'>Server error. Try later...</div>";
                     }
-
+*/
                     echo "<div class='alert alert-success'>".enviar_email($arrArgument)." </div>";
 				} catch (Exception $e) {
 					echo "<div class='alert alert-error'>Server error. Try later...</div>";
