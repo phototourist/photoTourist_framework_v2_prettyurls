@@ -12,7 +12,7 @@
             require_once VIEW_PATH_INC.'header.php';
             require_once VIEW_PATH_INC.'menu.php';
 
-            echo '<br><br><br><br><br><br><br>';
+            echo '<br><br>';
             loadView('modules/users/view/', 'create_users.php');
 
             require_once VIEW_PATH_INC.'footer.html';
