@@ -11,11 +11,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!--Codigo para inserta FAVICON-->
 	<link rel="shortcut icon" href="<?php echo IMG_PATH ?>/PhotoTourist_icono.ico">
 	<!--Fin FAVICON-->
-	<title>PhotoTourist|<?php if ($_GET['module']) {
-	    echo $_GET['module'];
-	} else {
-	    echo 'home';
-	} ?></title>
+	<title>PhotoTourist|<?php if(!isset($_GET['module'])){ echo "Homepage";}else{ echo $_GET['module'];} ?></title>
 
 	<!--Código para hacer Responsive-->
 	<meta name="viewport" content="width=device-width, initial-scale=1">

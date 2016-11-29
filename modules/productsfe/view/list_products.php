@@ -4,7 +4,7 @@
 
 <div id="main">
 
-        <h2>LIST PRODUCT</h2>
+        <h2>LISTADO DE FOTOGRAFIAS</h2>
         <p class="lead">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
         <!-- No vamos a utilizar modal ya que da problemas-->
@@ -42,8 +42,6 @@
 
             </div>
         </div>
-
-
 
 </section>
 

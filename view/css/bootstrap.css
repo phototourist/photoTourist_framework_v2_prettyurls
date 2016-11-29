@@ -4,7 +4,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
-<<<<<<< HEAD
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -9355,7 +9354,7 @@ output {
     text-decoration: none;
     vertical-align: middle;
     min-width: 300px;
-    padding: 20px;
+    /*padding: 20px;*/
     width: 300px;
     line-height: 1.42857143;
     background-image: none;
@@ -9368,7 +9367,7 @@ output {
    border-radius: 4px;
    color: #7d7c7b;
    min-width: 300px;
-   padding: 20px;
+   /*padding: 20px;*/
    width: 300px;
    line-height: 1.42857143;
 }

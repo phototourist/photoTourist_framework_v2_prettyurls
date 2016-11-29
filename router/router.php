@@ -18,7 +18,7 @@
 
 
 	session_start();
-	$_SESSION['module'] = "";
+	  $_SESSION['module'] = '';
 
 
 	function handlerRouter() {
