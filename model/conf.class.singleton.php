@@ -1,8 +1,6 @@
 <?php
 
-
-    class Conf
-    {
+    class Conf{
         private $_userdb;
         private $_passdb;
         private $_hostdb;
@@ -11,10 +9,11 @@
 
         private function __construct(){
             $cnfg = parse_ini_file(MODEL_PATH.'bd.ini');
-            $this->_userdb = $cnfg['user'];
-            $this->_passdb = $cnfg['password'];
-            $this->_hostdb = $cnfg['host'];
-            $this->_db = $cnfg['db'];
+            //Fijarse si cambiamos los parametros en bd.ini
+            $this->_userdb = $cnfg['_user'];
+            $this->_passdb = $cnfg['_password'];
+            $this->_hostdb = $cnfg['_host'];
+            $this->_db = $cnfg['_db'];
         }
 
         private function __clone() {

@@ -1,10 +1,4 @@
 <?php
-
-//$path = $_SERVER['DOCUMENT_ROOT'].'/php/photoTourist_framework_v1/';
-
-//require MODEL_PATH.'Db.class.singleton.php';
-//require SITE_ROOT.'modules/users/model/DAO/user_dao.class.singleton.php';
-
 class users_bll{
     private $dao;
     private $db;

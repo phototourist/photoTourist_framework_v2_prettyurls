@@ -32,16 +32,20 @@
 
     //model
     define('MODEL_PATH',SITE_ROOT.'model/');
+
     //view
     define('VIEW_PATH_INC',SITE_ROOT.'view/inc/');
     define('VIEW_PATH_INC_ERROR',SITE_ROOT.'view/inc/templates_error/');
+
     //modules
     define('MODULES_PATH',SITE_ROOT.'modules/');
 
     //resources
     define('RESOURCES',SITE_ROOT.'resources/');
+
     //media
     define('MEDIA_PATH',SITE_ROOT.'media/');
+
     //utils
     define('UTILS',SITE_ROOT.'utils/');
 
@@ -68,6 +72,12 @@
 		define('CONTACT_LIB_PATH', SITE_PATH . 'modules/contact/view/lib/');
 		define('CONTACT_IMG_PATH', SITE_PATH . 'modules/contact/view/img/');
     define('CONTACT_VIEW_PATH', 'modules/contact/view/');
+
+		//model camtourist
+		define('CAMTOURIST_CSS_PATH', SITE_PATH . '/modules/camtourist/view/css/');
+		define('CAMTOURIST_JS_PATH', SITE_PATH . '/modules/camtourist/view/js/');
+		define('MODEL_CAMTOURIST', SITE_ROOT . '/modules/camtourist/model/model/');
+		define('CAMTOURIST_CSS_PATH', SITE_PATH . 'modules/camtourist/view/css/');
 
 		//amigables
 		define('URL_AMIGABLES', TRUE);

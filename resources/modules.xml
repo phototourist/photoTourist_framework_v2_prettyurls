@@ -13,6 +13,10 @@
         <uri>productsfe</uri>
     </module>
     <module>
+        <name>camtourist</name>
+        <uri>camtourist</uri>
+    </module>
+    <module>
         <name>contact</name>
         <uri>contact</uri>
     </module>

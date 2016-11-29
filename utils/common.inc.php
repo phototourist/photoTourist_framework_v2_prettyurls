@@ -2,7 +2,6 @@
     function loadModel($model_path, $model_name, $function, $arrArgument = '') {
         $model = $model_path . $model_name . '.class.singleton.php';
 
-
         if (file_exists($model)) {
             include_once($model);
 

@@ -36,6 +36,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   <!-- Código para definir estilo CSS general de la página-->
 	<link href="<?php echo CSS_PATH ?>style.css" rel='stylesheet' type='text/css' />
 
+	<!-- Código para definir estilo CSS de geolocalización-->
+	<link href="<?php echo CAMTOURIST_CSS_PATH ?>geolocation.css" rel='stylesheet' type='text/css' />
+
 	<!-- Código para obtener las tipografías elegidas de Google Font-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -43,10 +46,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+	<!-- Llamada al main.js donde está la función amigable---->
+  <script type="text/javascript" src="<?php echo JS_PATH ?>main.js"></script>
+
+	<!-- Llamada al cookies.js --->
+	<script type="text/javascript" src="<?php echo JS_PATH ?>cookies.js"></script>
+
+
 	<!-- start-smoth-scrolling---->
 	<script type="text/javascript" src="<?php echo JS_PATH ?>move-top.js"></script>
 	<script type="text/javascript" src="<?php echo JS_PATH ?>easing.js"></script>
-<link href="<?php echo PRODUCTS_CSS_PATH ?>main.css" rel="stylesheet">
+
+
+	<link href="<?php echo PRODUCTS_CSS_PATH ?>main.css" rel="stylesheet">
+
 	<!--DatePicker-->
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
 	<script src="<?php echo JS_PATH ?>datepicker-es.js"></script>
