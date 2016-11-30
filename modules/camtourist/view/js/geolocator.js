@@ -3,9 +3,9 @@ function start() {
   $.post(amigable("?module=camtourist&function=maploader"), {value: {send: true}},
     //$.post("/camtourist/maploader", {value: {send: true}},
     function (response) {
-        //console.log(response);
+        alert(response.success);
         if (response.success) {
-            if (navigator.geolocation) {
+                if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(mostrarUbicacion);
                 cargarMap(response.camtourist);
                 cargarCamtourist(response.camtourist);
@@ -67,13 +67,13 @@ function marcar(map, camtourist) {
     var latlon = new google.maps.LatLng(camtourist.latitud, camtourist.longitud);
     var marker = new google.maps.Marker({position: latlon, map: map,
       title: camtourist.punto_interes,
-      icon:'',
+      icon:'http://projects.com/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
       //icon:{ url: "js/localizacion_maps.png",scaledSize: new google.maps.Size(64, 64)},
       animation: google.maps.Animation.BOUNCE});
-    setTimeout(function(){ marker.setAnimation(null); }, 5000);//controlamos tiempo BOUNCE marcador
+    setTimeout(function(){ marker.setAnimation(null); }, 10000);//controlamos tiempo BOUNCE marcador
     //marker.setIcon('http://var/www/html/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png/');
 
-marker.setIcon('http://www.googlemapsmarkers.com/v1/006666/');
+//marker.setIcon('http://www.googlemapsmarkers.com/v1/006666/');
 //marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
     var infowindow = new google.maps.InfoWindow({
         content: '<div id="iw-container">'+

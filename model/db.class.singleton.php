@@ -45,7 +45,9 @@
         private function conectar() {
 
             $this->link = new mysqli($this->servidor, $this->usuario, $this->password);
+            mysqli_set_charset($this->link,"utf8");
             $this->link->select_db($this->base_datos);
+
         }
 
 

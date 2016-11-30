@@ -1,7 +1,7 @@
 <?php
 
 function validate_user($value){
-  http://localhost/photoTourist_framework_v1/users/form_users/
+//  http://localhost/photoTourist_framework_v1/users/form_users/
     $error = array();
     $valido = true;
     $filtro = array(

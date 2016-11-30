@@ -7,5 +7,5 @@ function amigable(url) {
         var aux = url[i].split("=");
         link +=  "/"+aux[1];
     }
-    return "http://localhost/photoTourist_framework_v2_prettyurls" + link;
+    return "http://projects.com/photoTourist_framework_v2_prettyurls" + link;
 }
