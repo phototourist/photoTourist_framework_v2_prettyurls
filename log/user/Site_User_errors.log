@@ -187,3 +187,6 @@ Notice on line 52 in file /var/www/si1/servidor/photoTourist_framework_v2_pretty
 ERROR: [8] Undefined variable: fields
 Notice on line 52 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/camtourist/model/DAO/camtourist_dao.class.singleton.php
  | 01.12.2016 07:00:49  |  User:   |  | response 200
+ERROR: [8] Undefined variable: fields
+Notice on line 52 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/camtourist/model/DAO/camtourist_dao.class.singleton.php
+ | 01.12.2016 07:24:29  |  User:   |  | response 200

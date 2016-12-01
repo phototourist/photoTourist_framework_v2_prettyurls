@@ -3,7 +3,7 @@ function start() {
   $.post(amigable("?module=camtourist&function=maploader"), {value: {send: true}},
     //$.post("/camtourist/maploader", {value: {send: true}},
     function (response) {
-        alert(response.success);
+        //alert(response.success);
         if (response.success) {
                 if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(mostrarUbicacion);
