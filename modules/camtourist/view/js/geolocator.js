@@ -67,7 +67,7 @@ function marcar(map, camtourist) {
     var latlon = new google.maps.LatLng(camtourist.latitud, camtourist.longitud);
     var marker = new google.maps.Marker({position: latlon, map: map,
       title: camtourist.punto_interes,
-      icon:'http://projects.com/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
+      icon:'https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
       //icon:{ url: "js/localizacion_maps.png",scaledSize: new google.maps.Size(64, 64)},
       animation: google.maps.Animation.BOUNCE});
     setTimeout(function(){ marker.setAnimation(null); }, 10000);//controlamos tiempo BOUNCE marcador
