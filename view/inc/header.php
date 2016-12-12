@@ -40,7 +40,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<link href="<?php echo USERS_CSS_PATH ?>users.css" rel='stylesheet' type='text/css' />
 
 	<!-- Código para obtener las tipografías elegidas de Google Font-->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
 	<!-- Código para obtener librerias de jquery-->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>

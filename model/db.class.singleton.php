@@ -12,8 +12,6 @@
 
         private function __construct()
         {
-          //$mysqli->set_charset("utf8");
-    	    //mysqli_set_charset($this->mysqli,"utf8");
 
             $this->setConexion();
             $this->conectar();
@@ -49,7 +47,9 @@
         private function conectar() {
 
             $this->link = new mysqli($this->servidor, $this->usuario, $this->password);
+            mysqli_set_charset($this->link,"utf8");
             $this->link->select_db($this->base_datos);
+
         }
 
 

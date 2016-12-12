@@ -175,6 +175,7 @@ function validate_user_modify_PHP($value){
 }
 
 function validate_user($value){
+
     $error = array();
     $valido = true;
     $filtro = array(
