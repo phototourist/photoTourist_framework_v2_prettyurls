@@ -1,7 +1,180 @@
 <?php
 
+//Funcion para validar los 2 campos del Registro (SignUp)
+function validate_user_signup_PHP($value){
+    $error = array();
+    $valido = true;
+    $filtro = array(
+      'email' => array(
+          'filter' => FILTER_CALLBACK,
+          'options' => 'valida_email',
+      ),
+        'pass' => array(
+            'filter' => FILTER_VALIDATE_REGEXP,
+            //'options' => array('regexp' => '/^[0-9a-zA-Z]{6,32}$/'),
+            'options' => array('regexp' => '/^.{6,}$/')
+        ),
+    );
+
+    $resultado = filter_var_array($value, $filtro);
+    $valido = true;
+
+    if (!$resultado['email']) {
+        $error['email'] = 'error format email (example@example.com)';
+        $valido = false;
+    }
+
+    if (!$resultado['pass']) {
+        $error['pass'] = 'Password debe tener más de 6 caracteres';
+        $valido = false;
+    }
+
+    return $return = array('resultado' => $valido, 'error' => $error, 'datos' => $resultado);
+}
+
+//Funcion para validar los campos del Profile [Solo Email es obligatorio]
+function validate_user_modify_PHP($value){
+    $error = array();
+    $valido = true;
+    $filtro = array(
+      'email' => array(
+          'filter' => FILTER_CALLBACK,
+          'options' => 'valida_email',
+      )
+    );
+
+    //Como los campos no son obligatorios los validamos 1 X 1
+    if ($value['pass']){
+
+      $filtro['pass'] = array(
+          'filter' => FILTER_VALIDATE_REGEXP,
+          'options' => array('regexp' => '/^.{6,}$/'));
+    }
+
+    if ($value['name']){
+
+      $filtro['name'] = array(
+        'filter' => FILTER_VALIDATE_REGEXP,
+        'options' => array('regexp' => '/^[A-Za-z]{2,30}$/'));
+    }
+
+    if ($value['last_name']){
+
+      $filtro['last_name'] = array(
+        'filter' => FILTER_VALIDATE_REGEXP,
+        'options' => array('regexp' => '/^[A-Za-z]{2,30}$/'));
+    }
+    //Atención con las fechas, ahora esta en formato Español [dd/mm/yyyy]
+    if ($value['birth_date']){
+
+      $filtro['birth_date'] = array(
+        'filter' => FILTER_VALIDATE_REGEXP,
+        'options' => array('regexp' => '/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/'));
+    }
+
+    if ($value['title_date']){
+
+      $filtro['title_date'] = array(
+        'filter' => FILTER_VALIDATE_REGEXP,
+        'options' => array('regexp' => '/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/'));
+    }
+
+    if ($value['address']){
+
+      $filtro['address'] = array(
+        'filter' => FILTER_VALIDATE_REGEXP,
+        'options' => array('regexp' => '/^[a-z0-9- -.]+$/i'));
+    }
+
+    if ($value['user']){//Este campo se mejorará en el futuro o será el QR
+
+      $filtro['user'] = array(
+        'filter' => FILTER_VALIDATE_REGEXP,
+        'options' => array('regexp' => '/^[0-9a-zA-Z]{2,20}$/'));
+    }
+
+    $resultado = filter_var_array($value, $filtro);
+    $valido = true;
+
+    //Valores no filtrados con Expresiones Regulares
+    // tODO ESTO SOBRA
+    $resultado['en_lvl'] = $value['en_lvl'];
+    $resultado['interests'] = $value['interests'];
+    $resultado['pais'] = $value['pais'];
+    $resultado['provincia'] = $value['provincia'];
+    $resultado['poblacion'] = $value['poblacion'];
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    if ($resultado['birth_date']) {
+        //validate to user's over 16
+        $dates = validateAge($resultado['birth_date']);
+
+        if (!$dates) {
+            $error['birth_date'] = 'User must have more than 16 years';
+            $valido = false;
+        }
+    }
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    if (!$resultado['email']) {
+        $error['email'] = 'error format email (example@example.com)';
+        $valido = false;
+    }
+
+    if (!$resultado['pass']) {
+        $error['pass'] = 'Password debe tener más de 6 caracteres';
+        $valido = false;
+    }
+
+    if (!$resultado['name']) {
+        $error['name'] = 'Name must be 2 to 30 letters';
+        $valido = false;
+    }
+
+    if (!$resultado['user']) {
+        $error['user'] = 'User must be 2 to 20 characters';
+        $valido = false;
+    }
+
+    if (!$resultado['email']) {
+        $error['email'] = 'error format email (example@example.com)';
+        $valido = false;
+    }
+
+    if (!$resultado['pass']) {
+        $error['pass'] = 'Pass must be 6 to 32 characters';
+        $valido = false;
+    }
+
+    if (!$resultado['address']) {
+        $error['address'] = "Address don't have  symbols.";
+        $valido = false;
+    }
+
+    if (!$resultado['last_name']) {
+        $error['last_name'] = 'Last name must be 2 to 30 letters';
+        $valido = false;
+    }
+
+    if (!$resultado['birth_date']) {
+            $error['birth_date'] = 'error format date (mm/dd/yyyy)';
+            $valido = false;
+    }
+
+    //Podemos quitar una fecha, ya no tiene sentido
+    if (!$resultado['title_date']) {
+        if ($resultado['title_date'] == '') {
+            $error['title_date'] = "this camp can't empty";
+            $valido = false;
+        } else {
+            $error['title_date'] = 'error format date (mm/dd/yyyy)';
+            $valido = false;
+        }
+    }
+
+    return $return = array('resultado' => $valido, 'error' => $error, 'datos' => $resultado);
+}
+
 function validate_user($value){
-  http://localhost/photoTourist_framework_v1/users/form_users/
     $error = array();
     $valido = true;
     $filtro = array(
@@ -193,11 +366,48 @@ function valida_email($email)
 {
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        if (filter_var($email, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^.{5,50}$/')))) {
-            return
-             $email;
-        }
+      //$emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+        //if (filter_var($email, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^.{5,50}$/')))) {
+            return $email;
+        //}
     }
 
     return false;
 }
+
+//Crear un get_gravatar
+function get_gravatar($email, $s = 80, $d = 'wavatar', $r = 'g', $img = false, $atts = array()) {
+    $email = trim($email);
+    $email = strtolower($email);
+    $email_hash = md5($email);
+
+    $url = "https://www.gravatar.com/avatar/" . $email_hash;
+    $url .= md5(strtolower(trim($email)));
+    $url .= "?s=$s&d=$d&r=$r";
+    if ($img) {
+        $url = '<img src="' . $url . '"';
+        foreach ($atts as $key => $val)
+            $url .= ' ' . $key . '="' . $val . '"';
+        $url .= ' />';
+    }
+    return $url;
+}
+//Fin Gravatar
+
+//Funcion envio token
+function sendtoken($arrArgument, $type) {
+    $mail = array(
+        'type' => $type,
+        'token' => $arrArgument['token'],
+        'inputEmail' => $arrArgument['email']
+    );
+    set_error_handler('ErrorHandler');
+    try {
+        enviar_email($mail);
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+    restore_error_handler();
+}
+//Fin Token

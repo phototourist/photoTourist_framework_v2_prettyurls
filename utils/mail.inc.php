@@ -7,10 +7,10 @@
         $return = '';
 
         switch ($arr['type']) {
-            case 'alta':
-                $subject = 'Tu Alta en Rural_Shop';
+            case 'alta'://La $ruta hay que cambiarla NO BUENA
+                $subject = 'BIENVENIDO A PHOTOTOURIST';
                 $ruta = "<a href='" . amigable("?module=login&function=activar&aux=A" . $arr['token'], true) . "'>aqu&iacute;</a>";
-                $body = 'Gracias por unirte a nuestra aplicaci&oacute;n<br> Para finalizar el registro, pulsa ' . $ruta;
+                $body = 'Gracias por unirte a PhotoTourist<br> Para finalizar el registro, pulsa ' . $ruta;
                 break;
 
             case 'modificacion':
@@ -36,10 +36,10 @@
 
         $html .= "<html>";
         $html .= "<body>";
-	       $html .= "<h4>". $subject ."</h4>";
-	       $html .= $body;
-	       $html .= "<br><br>";
-	       $html .= "<p>Sent by PhotoTravel</p>";
+	      $html .= "<h4>". $subject ."</h4>";
+	      $html .= $body;
+	      $html .= "<br><br>";
+	      $html .= "<p>Sent by PhotoTourist</p>";
 		$html .= "</body>";
 		$html .= "</html>";
 

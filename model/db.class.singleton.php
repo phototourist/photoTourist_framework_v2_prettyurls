@@ -1,5 +1,6 @@
 <?php
     class db {
+
         private $servidor;
         private $usuario;
         private $password;
@@ -11,6 +12,9 @@
 
         private function __construct()
         {
+          //$mysqli->set_charset("utf8");
+    	    //mysqli_set_charset($this->mysqli,"utf8");
+
             $this->setConexion();
             $this->conectar();
         }
