@@ -1,5 +1,6 @@
 <?php
     class db {
+
         private $servidor;
         private $usuario;
         private $password;
@@ -11,6 +12,7 @@
 
         private function __construct()
         {
+
             $this->setConexion();
             $this->conectar();
         }

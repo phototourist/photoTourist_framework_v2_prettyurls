@@ -21,18 +21,6 @@ class users_bll{
         return $this->dao->create_user_DAO($this->db, $arrArgument);
     }
 
-    public function update_user_BLL($arrArgument) {
-        return $this->dao->update_user_DAO($this->db, $arrArgument);
-    }
-
-    public function count_BLL($arrArgument) {
-        return $this->dao->count_DAO($this->db, $arrArgument);
-    }
-
-    public function select_BLL($arrArgument) {
-        return $this->dao->select_DAO($this->db, $arrArgument);
-    }
-
     public function obtain_paises_BLL($url){
         return $this->dao->obtain_paises_DAO($url);
     }

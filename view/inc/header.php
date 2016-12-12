@@ -18,6 +18,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 	<!--Código para caracteres especiales-->
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8">
 
 	<!--Código para motores de búsqueda-->
 	<meta name="keywords" content="PhotoTourist es la nueva aplicación con la que obtendrás fotos realizadas por profesionales
@@ -35,6 +36,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- Código para definir estilo CSS de geolocalización-->
 	<link href="<?php echo CAMTOURIST_CSS_PATH ?>geolocation.css" rel='stylesheet' type='text/css' />
 
+	<!-- Código para definir estilo CSS de users: solo singin y singup-->
+	<link href="<?php echo USERS_CSS_PATH ?>users.css" rel='stylesheet' type='text/css' />
+
 	<!-- Código para obtener las tipografías elegidas de Google Font-->
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -44,6 +48,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 	<!-- Llamada al main.js donde está la función amigable---->
   <script type="text/javascript" src="<?php echo JS_PATH ?>main.js"></script>
+
+	<!-- Llamada al init.js donde damos información al usuario---->
+	<script type="text/javascript" src="<?php echo USERS_JS_PATH ?>init.js"></script>
 
 	<!-- Llamada al cookies.js --->
 	<script type="text/javascript" src="<?php echo JS_PATH ?>cookies.js"></script>

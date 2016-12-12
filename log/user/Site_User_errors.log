@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ERROR: [2] mysqli::mysqli(): (28000/1045): Access denied for user 'root'@'localhost' (using password: YES)
 Warning on line 47 in file /home/jorge/projects/photoTourist_framework_v2_prettyurls/model/db.class.singleton.php
  | 29.11.2016 06:50:27  |  User:   | productsfe | response 200
@@ -325,3 +326,5 @@ ERROR: [8] Undefined variable: fields
 Notice on line 52 in file /home/jorge/projects/photoTourist_framework_v2_prettyurls/modules/camtourist/model/DAO/camtourist_dao.class.singleton.php
  | 01.12.2016 05:15:11  |  User:   |  | response 200
 error loadView general | 04.12.2016 09:29:09  |  User:   | productsfe | response 200
+=======
+>>>>>>> 3755d58fc0502913ba13289d1bb4a2100f5e1d30

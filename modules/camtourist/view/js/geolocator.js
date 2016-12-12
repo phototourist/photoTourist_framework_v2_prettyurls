@@ -3,7 +3,7 @@ function start() {
   $.post(amigable("?module=camtourist&function=maploader"), {value: {send: true}},
     //$.post("/camtourist/maploader", {value: {send: true}},
     function (response) {
-        alert(response.success);
+        //alert(response.success);
         if (response.success) {
                 if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(mostrarUbicacion);
@@ -41,11 +41,13 @@ function mostrarUbicacion(position) {
     var times = position.timestamp;
     var latitud = position.coords.latitude;
     var longitud = position.coords.longitude;
+
     var altitud = position.coords.altitude;
     var exactitud = position.coords.accuracy;
 
     //setCookie("lat", latitud, 14);
     //setCookie("lon", longitud, 14);
+
     Tools.createCookie("lat", latitud, 1);
     Tools.createCookie("lon", longitud, 1);
 }
@@ -54,6 +56,7 @@ function refrescarUbicacion() {
     navigator.geolocation.watchPosition(mostrarUbicacion);
 }
 
+//informacion lateral de las CamTourist
 function cargarCamtourist(of) {
     for (var i = 0; i < of.length; i++) {
         var content = '<div class="of" id="' + of[i].id + '"><div class="desc">' + of[i].punto_interes + '</div><div class="">Categoría: ' + of[i].categoria + '</div><div class="hora"> Horario: ' + of[i].hora_inicio + ' - ' + of[i].hora_final + '</div></div>';
@@ -67,7 +70,12 @@ function marcar(map, camtourist) {
     var latlon = new google.maps.LatLng(camtourist.latitud, camtourist.longitud);
     var marker = new google.maps.Marker({position: latlon, map: map,
       title: camtourist.punto_interes,
+
       icon:'https://projects.com/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
+
+
+      //icon:'https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
+
       //icon:{ url: "js/localizacion_maps.png",scaledSize: new google.maps.Size(64, 64)},
       animation: google.maps.Animation.BOUNCE});
     setTimeout(function(){ marker.setAnimation(null); }, 10000);//controlamos tiempo BOUNCE marcador
@@ -75,6 +83,7 @@ function marcar(map, camtourist) {
 
 //marker.setIcon('http://www.googlemapsmarkers.com/v1/006666/');
 //marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+
     var infowindow = new google.maps.InfoWindow({
         content: '<div id="iw-container">'+
         '<div class="iw-title">'+ camtourist.punto_interes + '</div>'+
@@ -123,9 +132,16 @@ function cargarMap(arrArguments) {
     navigator.geolocation.getCurrentPosition(showPosition, showError);
 
     function showPosition(position){
-        var lat = position.coords.latitude;
-        var lon = position.coords.longitude;
+
+        //Cordenadas de Prueba que muestran Tarragona
+        var lat = 41.119116;
+        var lon = 1.244483;
+
+        //Estas variables recogen nuestra posición actual
+        //var lat = position.coords.latitude;
+        //var lon = position.coords.longitude;
         var latlon = new google.maps.LatLng(lat, lon);
+
         var mapholder = document.getElementById("mapholder");
         //mapholder.style.height = '550px';
         //mapholder.style.width = '900px';
@@ -137,6 +153,8 @@ function cargarMap(arrArguments) {
         };
         var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
         // var marker = new google.maps.Marker({position: latlon, map: map, title: "You are here!"});
+
+        //En el styles hemos insertado el diseño especial
         map.setOptions({styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}]});
 
         for (var i = 0; i < arrArguments.length; i++)

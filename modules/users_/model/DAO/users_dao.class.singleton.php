@@ -29,12 +29,6 @@ class users_dao{
         $pais = $arrArgument['pais'];
         $provincia = $arrArgument['provincia'];
         $poblacion = $arrArgument['poblacion'];
-        $tipo = $arrArgument['tipo'];
-        $token = $arrArgument['token'];
-        if ($arrArgument['activado'])
-            $activado = $arrArgument['activado'];
-        else
-            $activado = 0;
 
         $history = 0;
         $music = 0;
@@ -58,100 +52,13 @@ class users_dao{
 
         $sql = 'INSERT INTO users (name, last_name, birth_date, title_date,'
                 .' address, user, pass, email, en_lvl,Computing,History,'
-                .' Magic,Music,avatar,pais,provincia, poblacion,'
-                .' tipo,token,activado)'
+                .' Magic,Music,avatar,pais,provincia, poblacion)'
                 ." VALUES ('$name', '$last_name', '$birth_date','$title_date', "
                 ." '$address', '$user', '$pass', '$email', '$en_lvl', '$computing', '$history', "
-                ." '$magic', '$music', '$avatar', '$pais', '$provincia', '$poblacion',"
-                ." '$tipo', '$token','$activado')";
+                ." '$magic', '$music', '$avatar', '$pais', '$provincia', '$poblacion')";
 
         return $db->ejecutar($sql);
     }
-
-
-
-        public function count_DAO($db, $arrArgument) {
-            /* $arrArgument is composed by 2 array ("column" and "like"), this iterates
-             * the number of positions the array have, this way we get a method that builds a
-             * custom sql to select with the needed arguments
-             */
-            $i = count($arrArgument['column']);
-
-            $sql = "SELECT COUNT(*) as total FROM users WHERE ";
-
-            for ($j = 0; $j < $i; $j++) {
-                if ($i > 1 && $j != 0)
-                    $sql.=" AND ";
-                $sql .= $arrArgument['column'][$j] . " like '" . $arrArgument['like'][$j] . "'";
-            }
-            $stmt = $db->ejecutar($sql);
-            return $db->listar($stmt);
-        }
-
-        public function select_DAO($db, $arrArgument) {//Seleccionamos Users según email
-            $select = $arrArgument['select'];
-            $email = $arrArgument['email'];
-
-            $sql = "SELECT " . $select . " FROM users WHERE email = '" . $email . "'";
-
-            $stmt = $db->ejecutar($sql);
-            return $db->listar($stmt);
-        }
-
-        /*public function select_DAO($db, $arrArgument) {
-            $i = count($arrArgument['column']);
-            $k = count($arrArgument['field']);
-            $sql1 = "SELECT ";
-            $sql2 = " FROM users WHERE ";
-
-            for ($j = 0; $j < $i; $j++) {
-                if ($i > 1 && $j != 0)
-                    $sql.=" AND ";
-                $sql .= $arrArgument['column'][$j] . " like '" . $arrArgument['like'][$j] . "'";
-            }
-
-            for ($l = 0; $l < $k; $l++) {
-                if ($l > 1 && $k != 0)
-                    $fields.=", ";
-                $fields .= $arrArgument['field'][$l];
-            }
-
-
-            $sql = $sql1 . $fields . $sql2 . $sql;
-
-            $stmt = $db->ejecutar($sql);
-            return $db->listar($stmt);
-        }*/
-
-        public function update_user_DAO($db, $arrArgument) {
-            /*
-             * @param= $arrArgument( column => array(colum),
-             *                          like => array(like),
-             *                          field => array(field),
-             *                          new => array(new)
-             *                      );
-             */
-            $i = count($arrArgument['field']);
-            $k = count($arrArgument['column']);
-
-            $sql1 = "UPDATE users SET ";
-            $sql2 = "  WHERE ";
-
-            for ($j = 0; $j < $i; $j++) {
-                if ($i > 1 && $j != 0)
-                    $change.=", ";
-                $change .= $arrArgument['field'][$j] . "='" . $arrArgument['new'][$j] . "'";
-            }
-            for ($l = 0; $l < $k; $l++) {
-                if ($k > 1 && $l != 0)
-                    $sql.=" AND ";
-                $sql .= $arrArgument['column'][$l] . " like '" . $arrArgument['like'][$l] . "'";
-            }
-
-            $sql = $sql1 . $change . $sql2 . $sql;
-
-            return $db->ejecutar($sql);
-        }
 
     public function obtain_paises_DAO($url){
         $ch = curl_init();
@@ -201,6 +108,4 @@ class users_dao{
 
         return $json;
     }
-
-
 }
