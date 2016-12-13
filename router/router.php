@@ -53,22 +53,22 @@
 
                     $obj = new $controllerClass();
                 } else {
-									handlerModule('main', 'begin');
-                    //require_once VIEW_PATH_INC.'header.php';
-                    //require_once VIEW_PATH_INC.'menu.php';
-                    //showErrorPage(1, '', 'HTTP/1.0 400 Bad Request', 400);
-                    //require_once VIEW_PATH_INC.'footer.html';
+									//handlerModule('main', 'begin');
+                    require_once VIEW_PATH_INC.'header.php';
+                    require_once VIEW_PATH_INC.'menu.php';
+                    showErrorPage(1, '', 'HTTP/1.0 400 Bad Request', 400);
+                    require_once VIEW_PATH_INC.'footer.html';
                 }
                 handlerfunction(((string) $module->name), $obj, $URI_function);
                 break;
             }
         }
         if (!$exist) {
-					handlerModule('main', 'begin');
-            //require_once VIEW_PATH_INC.'header.php';
-            //require_once VIEW_PATH_INC.'menu.php';
-            //showErrorPage(1, '', 'HTTP/1.0 400 Bad Request', 400);
-            //require_once VIEW_PATH_INC.'footer.html';
+					//handlerModule('main', 'begin');
+            require_once VIEW_PATH_INC.'header.php';
+            require_once VIEW_PATH_INC.'menu.php';
+            showErrorPage(1, '', 'HTTP/1.0 400 Bad Request', 400);
+            require_once VIEW_PATH_INC.'footer.html';
         }
     }
 
@@ -85,11 +85,11 @@
             }
         }
         if (!$exist) {
-					handlerModule('main', 'begin');
-            //require_once VIEW_PATH_INC.'header.php';
-            //require_once VIEW_PATH_INC.'menu.php';
-            //showErrorPage(1, '', 'HTTP/1.0 400 Bad Request', 400);
-            //require_once VIEW_PATH_INC.'footer.html';
+				//	handlerModule('main', 'begin');
+            require_once VIEW_PATH_INC.'header.php';
+            require_once VIEW_PATH_INC.'menu.php';
+            showErrorPage(1, '', 'HTTP/1.0 400 Bad Request', 400);
+            require_once VIEW_PATH_INC.'footer.html';
         } else {
             //$obj->$event();
             call_user_func(array($obj, $event));

@@ -239,6 +239,9 @@
                       $jsondata['tipo'] = $arrValue[0]['tipo'];
                       $jsondata['name'] = $arrValue[0]['name'];
                       echo json_encode($jsondata);
+                    //  $url = amigable('?module=main&function=begin&param=reg', true);
+                    //  $jsondata["redirect"] = $url;
+
                   } else {
                       $jsondata['error'] = 'Password incorrecto';
                       echo json_encode($jsondata);
