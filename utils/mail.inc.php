@@ -14,8 +14,8 @@
                 break;
 
             case 'modificacion':
-                $subject = 'Tu Nuevo Password en Rural_Shop<br>';
-                $ruta = '<a href="' . amigable("?module=login&function=activar&aux=F" . $arr['token'], true) . '">aqu&iacute;</a>';
+                $subject = 'Tu Nuevo Password en PhotoTourist<br>';
+                $ruta = '<a href="' . amigable("?module=users&function=changepass" , true) . $arr['token'] . '">aqu&iacute;</a>';
                 $body = 'Para recordar tu password pulsa ' . $ruta;
                 break;
 

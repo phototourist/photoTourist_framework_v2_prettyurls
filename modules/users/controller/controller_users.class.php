@@ -322,10 +322,10 @@
               }
           } else {
               $url = amigable('?module=main', true);
-              //$jsondata['success'] = false;
+              $jsondata['success'] = false;
               $jsondata['redirect'] = $url;
               echo json_encode($jsondata);
-              //exit();
+              exit();
           }
       }
       //DEPENDENT DROP DOWN [Pais, Provincias, Poblaciones]
@@ -490,14 +490,21 @@
       //NO ESTA IMPLEMENTADA VISTAS vacías SOLO CÓDIGO COPIADO
       public function restore()
       {
-          loadView('modules/user/view/', 'restore.php');
+
+        require_once VIEW_PATH_INC.'header.php';
+        require_once VIEW_PATH_INC.'menu.php';
+
+        loadView('modules/users/view/', 'restore.php');
+
+        require_once VIEW_PATH_INC.'footer.html';
+
       }
 
       public function process_restore()
       {
           $result = array();
           if (isset($_POST['inputEmail'])) {
-              $result = validatemail($_POST['inputEmail']);
+              $result = valida_email($_POST['inputEmail']);
               if ($result) {
                   $column = array(
                       'email',
@@ -522,7 +529,9 @@
                   );
                   $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', $arrArgument);
                   if ($arrValue[0]['total'] == 1) {
-                      $arrValue = loadModel(MODEL_USERS, 'users_model', 'update', $arrArgument);
+                    set_error_handler('ErrorHandler');
+                      $arrValue = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrArgument);
+
                       if ($arrValue) {
                           //Este es el punto donde se Envia Email al usuario informando nueva Contraseña
                           $arrArgument = array(
@@ -542,44 +551,64 @@
                   echo 'El email no es válido';
               }
           }
+          restore_error_handler();
       }
 
-      public function changepass()
-      {
-          if (substr($_GET['param'], 0, 3) == 'Cha') {
-              loadView('modules/user/view/', 'changepass.php');
+
+      function changepass() {
+          if (substr($_GET['param'], 0, 3) == "Cha") {
+
+            require_once VIEW_PATH_INC.'header.php';
+            require_once VIEW_PATH_INC.'menu.php';
+
+            loadView('modules/users/view/', 'changepass.php');
+
+            require_once VIEW_PATH_INC.'footer.html';
+
+
           } else {
-              showErrorPage(1, '', 'HTTP/1.0 503 Service Unavailable', 503);
+              showErrorPage(1, "", 'HTTP/1.0 503 Service Unavailable', 503);
           }
       }
 
       public function update_pass()
       {
+
+
+
           $jsondata = array();
           $pass = json_decode($_POST['passw'], true);
+
           $arrArgument = array(
               'column' => array('token'),
               'like' => array($pass['token']),
               'field' => array('pass'),
-              'new' => array(password_hash($pass['pass'], PASSWORD_BCRYPT)),
+              'new' => array(password_hash($pass['password'], PASSWORD_BCRYPT)),
           );
 
+          $jsondata['hola'] = $arrArgument['new'];
+        //  echo json_encode($jsondata);
+          //exit;
+
+
           set_error_handler('ErrorHandler');
+
           try {
-              $value = loadModel(MODEL_USERS, 'users_model', 'update', $arrArgument);
-          } catch (Exception $e) {
+              $value = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrArgument);
+              } catch (Exception $e) {
+
               $value = false;
           }
           restore_error_handler();
 
           if ($value) {
-              $url = amigable('?module=main&function=begin&param=rest', true);
+              $url =  amigable("?module=main&function=begin" , true);
               $jsondata['success'] = true;
               $jsondata['redirect'] = $url;
               echo json_encode($jsondata);
               exit;
           } else {
-              $url = amigable('?module=main&function=begin&param=503', true);
+              $url =  amigable('?module=main&function=begin&param=503', true);
               $jsondata['success'] = true;
               $jsondata['redirect'] = $url;
               echo json_encode($jsondata);
@@ -587,4 +616,5 @@
           }
       }
       //FIN restaurar Contraseña
+
   }

@@ -18,7 +18,7 @@
     </function>
     <function>
         <name>restore</name>
-        <uri>recuperar</uri>
+        <uri>restore</uri>
     </function>
     <function>
         <name>process_restore</name>
@@ -30,7 +30,7 @@
     </function>
     <function>
         <name>changepass</name>
-        <uri>cambiarpass</uri>
+        <uri>changepass</uri>
     </function>
     <function>
         <name>update_pass</name>
