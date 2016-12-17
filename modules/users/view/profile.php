@@ -1,9 +1,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css">
-<!--<script type="text/javascript" src="modules/users/view/js/users.js" ></script>-->
-
-<script type="text/javascript" src="<?php echo USERS_JS_PATH ?>users.js"></script>
+<script type="text/javascript" src="<?php echo USERS_JS_PATH ?>profile.js"></script>
 
 <section id="contact-page">
     <div class="container">
@@ -12,6 +10,7 @@
             <hr>
         </div>
         <div class="row contact-wrap">
+          <!--Por Ahora esto no se usa, es una barra que verifica la creacion Usuario-->
             <div class="status alert alert-success" style="display: none"></div>
 
             <form id="form_user" name="form_user"><!---->
@@ -106,31 +105,46 @@
                         <div id="e_email"></div>
                     </div>
                     <br />
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label>Confirm Email *</label>
                         <input type="" id="conf_email" name="conf_email" placeholder="confirm e-mail" value="" class="form-control" required="required" >
                         <div id="e_conf_email"></div>
                     </div>
-                    <br />
+                    <br />-->
                     <div class="form-group">
                         <label>Interests  *</label><br>
 
-                        Computing  <input type="checkbox" name="interests[]" class="messageCheckbox" value="Computing">
-                        History  <input type="checkbox" name="interests[]" class="messageCheckbox" value="History">
-                        Magic  <input type="checkbox" name="interests[]" class="messageCheckbox" value="Magic">
-                        Music   <input type="checkbox" name="interests[]" class="messageCheckbox" value="Music">
+                        Computing  <input type="checkbox" id="computing" name="interests[]" class="messageCheckbox" value="Computing">
+                        History  <input type="checkbox" id="history" name="interests[]" class="messageCheckbox" value="History">
+                        Magic  <input type="checkbox" id="magic" name="interests[]" class="messageCheckbox" value="Magic">
+                        Music   <input type="checkbox" id="music" name="interests[]" class="messageCheckbox" value="Music">
                         <div id="e_interests"></div>
                     </div>
-                    <div class="form-group" id="progress">
+
+                    <img id="avatar_user" height="75" width="75"/>
+
+                    <!--<div class="form-group" id="progress">
                         <div id="bar"></div>
                         <div id="percent">0%</div>
-                    <div class="msg"></div>
-                    <br/>
-                    <div id="dropzone" class="dropzone"></div><br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    </div>
+                        <div class="msg"></div>
+                        <br/>
+                        <div id="dropzone" class="dropzone"></div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>-->
+
+                    <div class="form-group">
+      		              <div id="progress" class="form-group">
+                            	<div id="bar"></div>
+                            	<div id="percent">0%</div >
+                		    </div>
+                		    <div class="msg"></div>
+                  	    <br/>
+                		    <div id="dropzone" class="dropzone"></div><br/>
+        		        </div>
+
                 </div>
                 <div class="form-group">
                     <button type="button" id="submit_user" name="submit_user" class="btn btn-primary btn-lg centrado" value="submit">Submit Message</button>

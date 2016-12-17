@@ -60,7 +60,7 @@ $(document).ready(function(){
            $('.ajaxLoader').fadeIn("fast");
 
            var dataString = $("#contact_form").serialize();
-console.log(dataString);
+//console.log(dataString);
            $.ajax({
                type: "POST",
                url: "../../contact/process_contact/",

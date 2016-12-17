@@ -24,9 +24,6 @@
 		//libs
 		define('LIBS',SITE_ROOT.'libs/');
 
-		//img rural_shop
-    //define('IMG_RURAL_SHOP',SITE_ROOT.'view/img/rural_shop.jpg');
-
     //production
     define('PRODUCTION',true);
 
@@ -56,6 +53,7 @@
 	  define('BLL_USERS', SITE_ROOT.'modules/users/model/BLL/');
 	  define('MODEL_USERS', SITE_ROOT.'modules/users/model/model/');
 	  define('USERS_JS_PATH', SITE_PATH.'modules/users/view/js/');
+		define('USERS_CSS_PATH', SITE_PATH . '/modules/users/view/css/');//Habrá que pensar si añadirlo al css general
 
     //model products
 		define('FUNCTIONS_PRODUCTS',SITE_ROOT.'modules/productsfe/utils/');
@@ -74,7 +72,6 @@
     define('CONTACT_VIEW_PATH', 'modules/contact/view/');
 
 		//model camtourist
-		define('CAMTOURIST_CSS_PATH', SITE_PATH . '/modules/camtourist/view/css/');
 		define('CAMTOURIST_JS_PATH', SITE_PATH . '/modules/camtourist/view/js/');
 		define('MODEL_CAMTOURIST', SITE_ROOT . '/modules/camtourist/model/model/');
 		define('CAMTOURIST_CSS_PATH', SITE_PATH . 'modules/camtourist/view/css/');

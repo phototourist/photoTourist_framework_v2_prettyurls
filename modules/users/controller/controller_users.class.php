@@ -1,181 +1,348 @@
 <?php
+  class controller_users
+  {
+      public function __construct()
+      {
+          include FUNCTIONS_USERS.'functions_users.inc.php';
+          include LIBS.'password_compat-master/lib/password.php';
+          include UTILS.'upload.php';
+          $_SESSION['module'] = 'users';
+      }
 
-    class controller_users{
+//Funciones para signup
+      public function signup()
+      {
+          require_once VIEW_PATH_INC.'header.php';
+          require_once VIEW_PATH_INC.'menu.php';
 
-        public function __construct(){
-            include FUNCTIONS_USERS.'functions_users.inc.php';
-            include UTILS.'upload.php';
-            $_SESSION['module'] = 'users';
-        }
+          echo '<br><br>';
+          loadView('modules/users/view/', 'signup.php');
 
-        public function form_users(){
-            require_once VIEW_PATH_INC.'header.php';
-            require_once VIEW_PATH_INC.'menu.php';
+          require_once VIEW_PATH_INC.'footer.html';
+      }
 
-            echo '<br><br>';
-            loadView('modules/users/view/', 'create_users.php');
+      public function signup_user()
+      {
+          $jsondata = array();
+          $userJSON = json_decode($_POST['signup_user_json'], true);
 
-            require_once VIEW_PATH_INC.'footer.html';
-        }
+          $result = validate_user_signup_PHP($userJSON);
 
-        public function results_user(){
-            require_once VIEW_PATH_INC.'header.php';
-            require_once VIEW_PATH_INC.'menu.php';
+          if ($result['resultado']) {
+              $avatar = get_gravatar($result['datos']['email'], $s = 400, $d = 'identicon', $r = 'g', $img = false, $atts = array());
+              $arrArgument = array(
+              'email' => $result['datos']['email'],
+              'pass' => password_hash($result['datos']['pass'], PASSWORD_BCRYPT),
+              'avatar' => $avatar,
+              'tipo' => 'client',
+              'activado' => 0,
+              'token' => '',
+            );
 
-            echo '<br><br><br><br><br><br><br>';
-            loadView('modules/users/view/', 'results_users.php');
+            /* Control de registro */
+            set_error_handler('ErrorHandler');
+              try {
+                  //loadModel
+              $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', array('column' => array('email'), 'like' => array($arrArgument['email'])));
+                  if ($arrValue[0]['total'] == 1) {
+                      //Tenemos 1 User con email que buscamos
+                  $arrValue = false;
+                      $typeErr = 'Email';
+                      $error = 'Email ya registrado';
+                  }
+              } catch (Exception $e) {
+                  $arrValue = false;
+              }
 
-            require_once VIEW_PATH_INC.'footer.html';
-        }
+              restore_error_handler();
+            /* Fin de control de registro */
 
-        public function upload_users(){
-            if ((isset($_POST['upload'])) && ($_POST['upload'] == true)) {
-                $result_avatar = upload_files();
-                $_SESSION['result_avatar'] = $result_avatar;
-                echo debugPHP($_SESSION['result_avatar']); // show it   in alert(response) dropzone
-            }
-        }
+            if ($arrValue) {
+                set_error_handler('ErrorHandler');
 
-        public function alta_users(){
-            if ((isset($_POST['alta_users_json']))) {
-                $jsondata = array();
-
-                //Transformamos JSON a Datos normales.
-                $usersJSON = json_decode($_POST['alta_users_json'], true);
-
-                $result = validate_user($usersJSON);
-
-                if (empty($_SESSION['result_avatar'])) {
-                    $_SESSION['result_avatar'] = array('resultado' => true, 'error' => '', 'datos' => 'media/default-avatar.png');
-                }
-
-                $result_avatar = $_SESSION['result_avatar'];
-
-                if (($result['resultado']) && ($result_avatar['resultado'])) {
-                    $arrArgument = array(
-                        'name' => ucfirst($result['datos']['name']),
-                        'last_name' => ucfirst($result['datos']['last_name']),
-                        'birth_date' => $result['datos']['birth_date'],
-                        'title_date' => $result['datos']['title_date'],
-                        'address' => $result['datos']['address'],
-                        'user' => $result['datos']['user'],
-                        'pass' => $result['datos']['pass'],
-                        'email' => $result['datos']['email'],
-                        'en_lvl' => strtoupper($result['datos']['en_lvl']),
-                        'interests' => $result['datos']['interests'],
-                        'avatar' => $result_avatar['datos'],
-                        'pais' => ucfirst($result['datos']['pais']),
-                        'provincia' => ucfirst($result['datos']['provincia']),
-                        'poblacion' => ucfirst($result['datos']['poblacion']),
-                    );
-
-                    //-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-                    //Preparamos los datos para hacer insertarlos en la Base de Datos
+                try {
+                    //loadModel
+                $arrArgument['token'] = 'Ver'.md5(uniqid(rand(), true)); // La función Ver esta en el init.js
+                $arrValue = loadModel(MODEL_USERS, 'users_model', 'create_user', $arrArgument);
+                } catch (Exception $e) {
                     $arrValue = false;
-                    try {
-                        $arrValue = loadModel(MODEL_USERS, 'users_model', 'create_user', $arrArgument);
-                    } catch (Exception $e) {
-                        showErrorPage(2, 'ERROR - 503 BD', 'HTTP/1.0 503 Service Unavailable', 503);
-                    }
-
-                    if ($arrValue) {
-                        $mensaje = 'Su registro se ha efectuado correctamente, para finalizar compruebe que ha recibido un correo de validacion y siga sus instrucciones';
-                    } else {
-                        $mensaje = 'No se ha podido realizar su alta. Intentelo mas tarde';
-                    }
-
-                    //Redirigimos a results_users con los datos de $arrArgument y $mensaje
-                    $_SESSION['user'] = $arrArgument;
-                    $_SESSION['msje'] = $mensaje;
-                    $callback = '../../users/results_user/';
-                    //$callback = 'index.php?module=users&view=results_users';
-                    $jsondata['success'] = true;
-                    $jsondata['redirect'] = $callback;
-                    echo json_encode($jsondata);
-                    exit;
-                } else {
-                    //$error = $result['error'];
-                    //$error_avatar = $result_avatar['error'];
-                    $jsondata['success'] = false;
-                    $jsondata['error'] = $result['error'];
-                    $jsondata['error_avatar'] = $result_avatar['error'];
-
-                    $jsondata['success1'] = false;
-                    if ($result_avatar['resultado']) {
-                        $jsondata['success1'] = true;
-                        $jsondata['img_avatar'] = $result_avatar['datos'];
-                    }
-                    header('HTTP/1.0 400 Bad error', true, 404);
-                    echo json_encode($jsondata);
-                    //exit;
                 }
-            }
-        }
 
-        public function delete_users(){
-            if (isset($_GET['delete']) && $_GET['delete'] == true) {
-                $_SESSION['result_avatar'] = array();
-                $result = remove_files();
-                if ($result === true) {
-                    echo json_encode(array('res' => true));
-                } else {
-                    echo json_encode(array('res' => false));
-                }
-            }
-        }
+                restore_error_handler();
 
-        public function load_users(){
-
-          if (isset($_POST['load']) && $_POST['load'] == true) {
-          //echo json_encode("FUNCION LOAD USERS");
-          //exit;
-                $jsondata = array();
-                if (isset($_SESSION['user'])) {
-                    //echo debug($_SESSION['user']);
-                  $jsondata['user'] = $_SESSION['user'];
-                }
-                if (isset($_SESSION['msje'])) {
-                    //echo $_SESSION['msje'];
-                  $jsondata['msje'] = $_SESSION['msje'];
-                }
-                close_session();
+              //Enviamos en Token
+              if ($arrValue) {
+                  //Si todo el proceso es CORRECTO enviamos Token y redireccionamos
+                sendtoken($arrArgument, 'alta');
+                //$url = amigable('?module=main&function=begin&param=reg', true);
+                $url = amigable('?module=users&function=profile', true);
+                  $jsondata['success'] = true;
+                  $jsondata['redirect'] = $url;
+                  echo json_encode($jsondata);
+              } else {
+                  $url = amigable('?module=main&function=begin&param=503', true);
+                  $jsondata['success'] = true;
+                  $jsondata['redirect'] = $url;
+                  echo json_encode($jsondata);
+              }
+            } else {
+                $jsondata['success'] = false;
+                $jsondata['typeErr'] = $typeErr;
+                $jsondata['error'] = $error;
                 echo json_encode($jsondata);
-                exit;
             }
+          } else {
+              $jsondata['success'] = false;
+              $jsondata['typeErr'] = $result['error'];
+              $jsondata['datos'] = $result;
+              echo json_encode($jsondata);
+          }
+      }
+
+      public function verify()
+      {
+          //MADREEEEEEEEE
+          if (substr($_GET['param'], 0, 3) == 'Ver') {
+              $arrArgument = array(
+                'column' => array('token'),
+                'like' => array($_GET['param']),
+                'field' => array('activado'),
+                'new' => array('1'),
+            );
+
+              set_error_handler('ErrorHandler');
+              try {
+                  $value = loadModel(MODEL_USERS, 'users_model', 'update', $arrArgument);
+              } catch (Exception $e) {
+                  $value = false;
+              }
+              restore_error_handler();
+
+              if ($value) {
+                  loadView('modules/main/view/', 'main.php');
+              } else {
+                  showErrorPage(1, '', 'HTTP/1.0 503 Service Unavailable', 503);
+              }
+          }
+      }
+    //end SignUp
+
+    //.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+
+    //Redes Sociales
+    public function social_signin()
+    { //utilitzada per Facebook i Twitter
+        $user = json_decode($_POST['user'], true);
+        if (isset($user['twitter']) && $user['twitter']) {
+            //Ahora no estamos utilizando
+            $user['apellidos'] = '';
+            $user['email'] = '';
+            $mail = $user['user_id'].'@gmail.com';
+        }
+        set_error_handler('ErrorHandler');
+        try {
+            $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', array('column' => array('email'), 'like' => array($user['email'])));
+        } catch (Exception $e) {
+            $arrValue = false;
+        }
+        restore_error_handler();
+
+        if (!$arrValue[0]['total']) {
+            if ($user['email']) {
+                $avatar = 'https://graph.facebook.com/'.($user['token']).'/picture';
+            } else {
+                $avatar = get_gravatar($mail, $s = 400, $d = 'identicon', $r = 'g', $img = false, $atts = array());
+            }
+
+            $arrArgument = array(
+                'token' => $user['token'],
+                'name' => $user['name'],
+                'last_name' => $user['last_name'],
+                'email' => $user['email'],
+                'avatar' => $avatar,
+                'tipo' => 'client',
+                'activado' => '1',
+            );
+
+            set_error_handler('ErrorHandler');
+            try {
+                $value = loadModel(MODEL_USERS, 'users_model', 'create_user', $arrArgument);
+            } catch (Exception $e) {
+                echo json_encode('Exception = '.$e->getMessage()); //Devuelve el mensaje de Excepción en formato cadena
+                $value = false;
+            }
+            restore_error_handler();
+        } else {
+            $value = true;
         }
 
-        public function load_data_users(){
-            if ((isset($_GET['load_data'])) && ($_GET['load_data'] == true)) {
-                $jsondata = array();
-
-                if (isset($_SESSION['user'])) {
-                    $jsondata['user'] = $_SESSION['user'];
-                    echo json_encode($jsondata);
-                    exit;
-                } else {
-                    $jsondata['user'] = '';
-                    echo json_encode($jsondata);
-                    exit;
-                }
-            }
+        if ($value) {
+            set_error_handler('ErrorHandler');
+            $arrArgument = array(
+                'email' => $user['email'],
+                'select' => '*',
+            );
+            $user = loadModel(MODEL_USERS, 'users_model', 'select', $arrArgument);
+            /*$jsondata['user'] = $user[0]['user'];
+            $jsondata['avatar'] = $user[0]['avatar'];
+            $jsondata['tipo'] = $user[0]['tipo'];
+            $jsondata['name'] = $user[0]['name'];
+            echo json_encode($jsondata);*/
+            echo json_encode($user[0]);
+            restore_error_handler();
+        } else {
+            $jsondata['error'] = 'Error al crear el usuario';
+            echo json_encode($jsondata);
         }
+    }//FIN Redes sociales
 
+    //.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+    //Funciones para Login
+      public function login_users()
+      {
+          require_once VIEW_PATH_INC.'header.php';
+          require_once VIEW_PATH_INC.'menu.php';
+
+          echo '<br><br>';
+          loadView('modules/users/view/', 'signin.php');
+
+          require_once VIEW_PATH_INC.'footer.html';
+      }
+
+      public function login()
+      {
+          $user = json_decode($_POST['login_json'], true);
+          $email = $user['email'];
+          $pass = $user['pass'];
+
+          $arrArgument = array(
+                'email' => $email,
+                'pass' => $pass,
+                'select' => 'pass',
+              );
+
+          set_error_handler('ErrorHandler');
+
+          try {
+              //loadModel
+                  $arrValue = loadModel(MODEL_USERS, 'users_model', 'select', $arrArgument);
+
+              if (count($arrValue) > 0) {
+                  //Comprobamos si el Select nos ha devuelto algo
+                  $passIsCorrect = password_verify($user['pass'], $arrValue[0]['pass']);
+
+                  if ($passIsCorrect) {
+                      $arrArgument['select'] = '*';
+                      $arrValue = loadModel(MODEL_USERS, 'users_model', 'select', $arrArgument);
+                      $jsondata['user'] = $arrValue[0]['user'];
+                      $jsondata['avatar'] = $arrValue[0]['avatar'];
+                      $jsondata['tipo'] = $arrValue[0]['tipo'];
+                      $jsondata['name'] = $arrValue[0]['name'];
+                      echo json_encode($jsondata);
+                    //  $url = amigable('?module=main&function=begin&param=reg', true);
+                    //  $jsondata["redirect"] = $url;
+
+                  } else {
+                      $jsondata['error'] = 'Password incorrecto';
+                      echo json_encode($jsondata);
+                  }
+              } else {
+                  $jsondata['error'] = 'No existe email';
+                  echo json_encode($jsondata);
+              }
+          } catch (Exception $e) {
+              $jsondata['error'] = $e->getMessage();
+              echo json_encode($jsondata);
+          }
+
+          restore_error_handler();
+      }//FIN Login
+
+      //.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+
+      //.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+      //Funciones para el Profile
+      public function profile()
+      {
+          require_once VIEW_PATH_INC.'header.php';
+          require_once VIEW_PATH_INC.'menu.php';
+
+          echo '<br><br>';
+          loadView('modules/users/view/', 'profile.php');
+
+          require_once VIEW_PATH_INC.'footer.html';
+      }
+
+      public function upload_avatar()
+      {
+          $result_avatar = upload_files();
+          $_SESSION['avatar'] = $result_avatar;
+      }
+
+      public function delete_avatar()
+      {
+          $_SESSION['avatar'] = array();
+          $result = remove_files();
+          if ($result === true) {
+              echo json_encode(array('res' => true));
+          } else {
+              echo json_encode(array('res' => false));
+          }
+      }
+
+      public function profile_filler()
+      {
+        //echo json_encode('email1 = ' . $_POST['email']);
+          if (isset($_POST['email'])) {
+            //echo json_encode('email2 = ' . $_POST['email']);
+              set_error_handler('ErrorHandler');
+              try {
+                  $arrArgument = array(
+                    'email' => $_POST['email'],
+                    'select' => '*',
+                );
+                  $arrValue = loadModel(MODEL_USERS, 'users_model', 'select', $arrArgument);
+                //$arrValue = loadModel(MODEL_USERS, 'users_model', 'select', array(column => array('usuario'), like => array($_POST['usuario']), field => array('*')));
+              } catch (Exception $e) {
+                  $arrValue = false;
+              }
+              restore_error_handler();
+
+              if ($arrValue) {
+                  $jsondata['success'] = true;
+                  $jsondata['user'] = $arrValue[0];
+                  echo json_encode($jsondata);
+                  //exit();
+              } else {
+                  $url = amigable('?module=main', true);
+                  //$jsondata['success'] = false;
+                  $jsondata['redirect'] = $url;
+                  echo json_encode($jsondata);
+                  //exit();
+              }
+          } else {
+              $url = amigable('?module=main', true);
+              $jsondata['success'] = false;
+              $jsondata['redirect'] = $url;
+              echo json_encode($jsondata);
+              exit();
+          }
+      }
       //DEPENDENT DROP DOWN [Pais, Provincias, Poblaciones]
-      public function load_countries_users(){
+      public function load_countries_users()
+      {
           if ((isset($_GET['load_country'])) && ($_GET['load_country'] == true)) {
               $json = array();
               $url = 'http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso/ListOfCountryNamesByName/JSON';
-
-              //$path_model = $_SERVER['DOCUMENT_ROOT'].'/php/photoTourist_framework_v1/modules/users/model/model/';
-
-              //$json = loadModel($path_model, 'users_model', 'obtain_paises', $url);
+              set_error_handler('ErrorHandler');
 
               try {
-                              //throw new Exception();
-                  $json = loadModel(MODEL_USERS, "users_model", "obtain_paises", $url);
+                  $json = loadModel(MODEL_USERS, 'users_model', 'obtain_paises', $url);
               } catch (Exception $e) {
                   $json = array();
+                  //$json = false;
               }
+              restore_error_handler();
 
         //FUNCION DE TONI para comprobar si la url de pais está disponible
             if (stristr($json, 'error')) {
@@ -193,59 +360,261 @@
           }
       }
 
-        public function load_provinces_users(){
+      public function load_provinces_users()
+      {
+          if ((isset($_POST['load_provinces'])) && ($_POST['load_provinces'] == true)) {
+              $jsondata = array();
+              $json = array();
+              set_error_handler('ErrorHandler');
 
-            if ((isset($_POST['load_provinces'])) && ($_POST['load_provinces'] == true)) {
-                $jsondata = array();
-                $json = array();
+              try {
+                  $json = loadModel(MODEL_USERS, 'users_model', 'obtain_provincias');
+              } catch (Exception $e) {
+                  $json = array();
+              }
 
-                //$path_model = $_SERVER['DOCUMENT_ROOT'].'/php/photoTourist_framework_v1/modules/users/model/model/';
+              if ($json) {
+                  $jsondata['provincias'] = $json;
+                  echo json_encode($jsondata);
+                  exit;
+              } else {
+                  $jsondata['provincias'] = 'error';
+                  echo json_encode($jsondata);
+                  exit;
+              }
+          }
+      }
 
-                //$json = loadModel($path_model, 'users_model', 'obtain_provincias');
+      public function load_towns_users()
+      {
+          if (isset($_POST['idPoblac'])) {
+              $jsondata = array();
+              $json = array();
+              set_error_handler('ErrorHandler');
 
-                try {
-                  $json = loadModel(MODEL_USERS, "users_model", "obtain_provincias");
-                } catch (Exception $e) {
-                    $json = array();
-                }
+              try {
+                  $json = loadModel(MODEL_USERS, 'users_model', 'obtain_poblaciones', $_POST['idPoblac']);
+              } catch (Exception $e) {
+                  showErrorPage(2, 'ERROR - 503 BD', 'HTTP/1.0 503 Service Unavailable', 503);
+              }
+              restore_error_handler();
 
-                if ($json) {
-                    $jsondata['provincias'] = $json;
-                    echo json_encode($jsondata);
-                    exit;
-                } else {
-                    $jsondata['provincias'] = 'error';
-                    echo json_encode($jsondata);
-                    exit;
+              if ($json) {
+                  $jsondata['poblaciones'] = $json;
+                  echo json_encode($jsondata);
+                  exit;
+              } else {
+                  $jsondata['poblaciones'] = 'error';
+                  echo json_encode($jsondata);
+                  exit;
+              }
+          }
+        }
+          //.-.-.-.-.-.-.-.-.-.-.-.-.-.-.--.-.--.-.-.-.-.-.-.-.-.--.-.-.
+
+    function modify()
+    {
+        $jsondata = array();
+        $userJSON = json_decode($_POST['mod_user_json'], true);
+        //$userJSON['password2'] = $userJSON['password'];
+
+        $result = validate_user_modify_PHP($userJSON);
+        if ($result['resultado']) {
+            $arrArgument = array(
+              'name' => ucfirst($result['name']),
+              'last_name' => ucfirst($result['last_name']),
+              'birth_date' => $result['birth_date'],
+              'title_date' => $result['title_date'],
+              'address' => $result['address'],
+              'user' => $result['user'],
+              'email' => $result['email'],
+              'pass' => password_hash($result['pass'], PASSWORD_BCRYPT),
+              'en_lvl' => strtoupper($result['en_lvl']),
+              'interests' => $result['interests'],
+              'avatar' => $result['avatar'],
+              'pais' => ucfirst($result['pais']),
+              'provincia' => ucfirst($result['provincia']),
+              'poblacion' => ucfirst($result['poblacion']),
+              'tipo' => $result['tipo'],
+            );
+
+            if(isset($_SESSION['avatar']) && $_SESSION['avatar'] != null && $_SESSION['avatar'].count() > 0){
+              $arrArgument['avatar'] = $_SESSION['avatar'];
+            }
+
+            $arrayDatos = array(
+                column => array('email',),
+                like => array($arrArgument['email'],),
+            );
+            $j = 0;
+            foreach ($arrArgument as $clave => $valor) {
+                if ($valor != '') {
+                    $arrayDatos['field'][$j] = $clave;
+                    $arrayDatos['new'][$j] = $valor;
+                    ++$j;
                 }
             }
-        }
 
-        public function load_towns_users(){
-            if (isset($_POST['idPoblac'])) {
-                $jsondata = array();
-                $json = array();
-
-                //$path_model = $_SERVER['DOCUMENT_ROOT'].'/php/photoTourist_framework_v1/modules/users/model/model/';
-                //$json = loadModel($path_model, 'users_model', 'obtain_poblaciones', $_POST['idPoblac']);
-
-                try {
-                     $json = loadModel(MODEL_USERS, "users_model", "obtain_poblaciones", $_POST['idPoblac']);
-                } catch (Exception $e) {
-                      showErrorPage(2, "ERROR - 503 BD", 'HTTP/1.0 503 Service Unavailable', 503);
-                }
-
-                if ($json) {
-                    $jsondata['poblaciones'] = $json;
-                    echo json_encode($jsondata);
-                    exit;
-                } else {
-                    $jsondata['poblaciones'] = 'error';
-                    echo json_encode($jsondata);
-                    exit;
-                }
+            set_error_handler('ErrorHandler');
+            try {
+                $arrValue = loadModel(MODEL_USERS, 'users_model', 'update', $arrayDatos);
+            } catch (Exception $e) {
+                $arrValue = false;
             }
-        }
+            restore_error_handler();
+            if ($arrValue) {
+                $url = amigable('?module=users&function=profile&param=done', true);
+                $jsondata['success'] = true;
+                $jsondata['redirect'] = $url;
+                $_SESSION['avatar'] = null;
+                echo json_encode($jsondata);
+                exit;
+            } else {
+                //$jsondata['success'] = false;
+                $jsondata['redirect'] = $url = amigable('?module=users&function=profile&param=503', true);
+                echo json_encode($jsondata);
+            }
+          } else {
+              //$jsondata['success'] = false;
+              $jsondata['datos'] = $result;
+              echo json_encode($jsondata);
+          }
+      }
+            //FIN Profile
       //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-    }
+
+      //.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+
+      //Restaurar Contraseña
+      //NO ESTA IMPLEMENTADA VISTAS vacías SOLO CÓDIGO COPIADO
+      public function restore()
+      {
+
+        require_once VIEW_PATH_INC.'header.php';
+        require_once VIEW_PATH_INC.'menu.php';
+
+        loadView('modules/users/view/', 'restore.php');
+
+        require_once VIEW_PATH_INC.'footer.html';
+
+      }
+
+      public function process_restore()
+      {
+          $result = array();
+          if (isset($_POST['inputEmail'])) {
+              $result = valida_email($_POST['inputEmail']);
+              if ($result) {
+                  $column = array(
+                      'email',
+                  );
+                  $like = array(
+                      $_POST['inputEmail'],
+                  );
+                  $field = array(
+                      'token',
+                  );
+
+                  $token = 'Cha'.md5(uniqid(rand(), true));
+                  $new = array(
+                      $token,
+                  );
+
+                  $arrArgument = array(
+                      'column' => $column,
+                      'like' => $like,
+                      'field' => $field,
+                      'new' => $new,
+                  );
+                  $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', $arrArgument);
+                  if ($arrValue[0]['total'] == 1) {
+                    set_error_handler('ErrorHandler');
+                      $arrValue = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrArgument);
+
+                      if ($arrValue) {
+                          //Este es el punto donde se Envia Email al usuario informando nueva Contraseña
+                          $arrArgument = array(
+                              'token' => $token,
+                              'email' => $_POST['inputEmail'],
+                          );
+                          if (sendtoken($arrArgument, 'modificacion')) {
+                              echo 'Tu nueva contraseña ha sido enviada al email';
+                          } else {
+                              echo 'Error en el servidor. Intentelo más tarde';
+                          }
+                      }
+                  } else {
+                      echo 'El email introducido no existe ';
+                  }
+              } else {
+                  echo 'El email no es válido';
+              }
+          }
+          restore_error_handler();
+      }
+
+
+      function changepass() {
+          if (substr($_GET['param'], 0, 3) == "Cha") {
+
+            require_once VIEW_PATH_INC.'header.php';
+            require_once VIEW_PATH_INC.'menu.php';
+
+            loadView('modules/users/view/', 'changepass.php');
+
+            require_once VIEW_PATH_INC.'footer.html';
+
+
+          } else {
+              showErrorPage(1, "", 'HTTP/1.0 503 Service Unavailable', 503);
+          }
+      }
+
+      public function update_pass()
+      {
+
+
+
+          $jsondata = array();
+          $pass = json_decode($_POST['passw'], true);
+
+          $arrArgument = array(
+              'column' => array('token'),
+              'like' => array($pass['token']),
+              'field' => array('pass'),
+              'new' => array(password_hash($pass['password'], PASSWORD_BCRYPT)),
+          );
+
+          $jsondata['hola'] = $arrArgument['new'];
+        //  echo json_encode($jsondata);
+          //exit;
+
+
+          set_error_handler('ErrorHandler');
+
+          try {
+              $value = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrArgument);
+              } catch (Exception $e) {
+
+              $value = false;
+          }
+          restore_error_handler();
+
+          if ($value) {
+              $url =  amigable("?module=main&function=begin" , true);
+              $jsondata['success'] = true;
+              $jsondata['redirect'] = $url;
+              echo json_encode($jsondata);
+              exit;
+          } else {
+              $url =  amigable('?module=main&function=begin&param=503', true);
+              $jsondata['success'] = true;
+              $jsondata['redirect'] = $url;
+              echo json_encode($jsondata);
+              exit;
+          }
+      }
+      //FIN restaurar Contraseña
+
+  }
