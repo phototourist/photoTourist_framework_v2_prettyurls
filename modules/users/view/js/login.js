@@ -58,9 +58,17 @@ function login() {
                     //create session cookies
                     Tools.createCookie("user", response.email + "|" + response.user + "|" + response.avatar + "|" + response.tipo + "|" + response.name, 1);
                     //alert(response.name);
-                    window.location.href  = amigable('?module=users&function=profile', true);
+                    window.location.href  = amigable('?module=main&function=begin', true);
                 } else {
-                    $("#signin_password").focus().after("<span class='error'>" + response.error + "</span>");
+                    if (response.datos == 503)
+                      window.location.href = amigable("?module=main&fn=begin&param=503");
+                    else
+                    if(response.error.includes("email")){
+                      $("#signin_email").focus().after("<span class='error'>" + response.error + "</span>");
+                    }
+                    else{
+                      $("#signin_password").focus().after("<span class='error'>" + response.error + "</span>");
+                    }
                 }
             }, "json").fail(function(xhr, textStatus, errorThrown) {
             console.log(xhr.responseText);

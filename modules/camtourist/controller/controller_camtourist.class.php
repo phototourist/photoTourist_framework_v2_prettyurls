@@ -18,11 +18,9 @@
             set_error_handler('ErrorHandler');
             try {
                 $arrValue = loadModel(MODEL_CAMTOURIST, 'camtourist_model', 'select', array('column' => array('false'), 'field' => array('*')));
-                //echo json_encode($arrValue);
-                //echo json_encode("MIERDA1");
+
             } catch (Exception $e) {
                 $arrValue = false;
-                //echo json_encode("MIERDA2");
             }
             restore_error_handler();
 

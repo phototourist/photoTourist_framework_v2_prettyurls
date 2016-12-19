@@ -9,7 +9,7 @@
         switch ($arr['type']) {
             case 'alta'://La $ruta hay que cambiarla NO BUENA
                 $subject = 'BIENVENIDO A PHOTOTOURIST';
-                $ruta = "<a href='" . amigable("?module=login&function=activar&aux=A" . $arr['token'], true) . "'>aqu&iacute;</a>";
+                $ruta = '<a href=' . amigable("?module=users&function=activar", true) . $arr['token'] . '>aqu&iacute;</a>';
                 $body = 'Gracias por unirte a PhotoTourist<br> Para finalizar el registro, pulsa ' . $ruta;
                 break;
 
@@ -39,7 +39,7 @@
 	      $html .= "<h4>". $subject ."</h4>";
 	      $html .= $body;
 	      $html .= "<br><br>";
-	      $html .= "<p>Sent by PhotoTourist</p>";
+	      $html .= "<p>Enviado por PhotoTourist</p>";
 		$html .= "</body>";
 		$html .= "</html>";
 

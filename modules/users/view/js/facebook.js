@@ -55,12 +55,10 @@ function getUserInfo() {
                     Tools.createCookie("user", response.email + "|" + response.user + "|" + response.avatar + "|" + response.tipo + "|" + response.name, 1);
                     //alert(response.name);
                     //window.location.href = amigable("?module=main");
-                    window.location.href  = amigable('?module=users&function=profile', true);//
+                    window.location.href  = amigable('?module=main&function=begin&param=fb', true);//
                 } else {
-                    //if (response.datos == 503)
-                    //alert("ERRORAZO");
-                    alert(reponse.error);
-                    //window.location.href = amigable("?module=main&fn=begin&param=503");
+                    if (response.datos == 503)
+                        window.location.href = amigable("?module=main&fn=begin&param=503");
                 }
             }, "json").fail(function (xhr, textStatus, errorThrown) {
                 console.log(xhr.responseText);

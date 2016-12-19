@@ -1631,6 +1631,8 @@ a.boxclose {
 }
 .error {
   	padding: 5em 0px 7em 0px;
+    font-family: 'Unica One', cursive;
+    color: red;
 }
 .career-bottom h4 {
   	font-size: 1.8em;

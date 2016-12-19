@@ -203,14 +203,21 @@
 
         public function load_provinces_users()
         {
-            if ((isset($_POST['load_provinces'])) && ($_POST['load_provinces'] == true)) {
+          $jsondata = array();
+          $json = array();
+          $jsondata['provincias'] = 'error';
+          echo json_encode($jsondata);
+          exit;
+            if ((isset($_GET['load_provinces'])) && ($_GET['load_provinces'] == true)) {
                 $jsondata = array();
                 $json = array();
-
+                $jsondata['provincias'] = 'error';
+                echo json_encode($jsondata);
+                exit;
                 //$path_model = $_SERVER['DOCUMENT_ROOT'].'/php/photoTourist_framework_v1/modules/users/model/model/';
 
                 //$json = loadModel($path_model, 'users_model', 'obtain_provincias');
-
+/*
                 try {
                     $json = loadModel(MODEL_USERS, 'users_model', 'obtain_provincias');
                 } catch (Exception $e) {
@@ -225,7 +232,7 @@
                     $jsondata['provincias'] = 'error';
                     echo json_encode($jsondata);
                     exit;
-                }
+                }*/
             }
         }
 

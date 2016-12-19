@@ -63,7 +63,7 @@
         }
 
         ////////////////////////////////////////////////////////////////////////////
-        $upfile = $_SERVER['DOCUMENT_ROOT'].'/php/photoTourist_framework_v1/media/'.$_FILES['file']['name'];
+        $upfile = $_SERVER['DOCUMENT_ROOT'].'/photoTourist_framework_v2_prettyurls/media/'.$_FILES['file']['name'];
         if (is_uploaded_file($_FILES['file']['tmp_name'])) {
             if (is_file($_FILES['file']['tmp_name'])) {
                 $idUnico = rand();
@@ -71,7 +71,7 @@
                 $_SESSION['nombreFichero'] = $nombreFichero;
                 $copiarFichero = true;
                 // I use absolute route to move_uploaded_file because this happens when i run ajax
-                $upfile = $_SERVER['DOCUMENT_ROOT'].'/php/photoTourist_framework_v1/media/'.$nombreFichero;
+                $upfile = $_SERVER['DOCUMENT_ROOT'].'/photoTourist_framework_v2_prettyurls/media/'.$nombreFichero;
             } else {
                 $error .= 'Invalid File...';
             }
@@ -86,12 +86,12 @@
                     return $return = array('resultado' => false, 'error' => $error, 'datos' => '');
                 }
                 //We need edit $upfile because now i don't need absolute route.
-                $upfile = '/php/photoTourist_framework_v1/media/'.$nombreFichero;
+                $upfile = '/photoTourist_framework_v2_prettyurls/media/'.$nombreFichero;
 
                 return $return = array('resultado' => true, 'error' => $error, 'datos' => $upfile);
             }
             if ($_FILES['file']['error'] !== 0) { //Assignarem a l'us default-avatar
-                $upfile = '/php/photoTourist_framework_v1/media/default-avatar.jpg';
+                $upfile = '/photoTourist_framework_v2_prettyurls/media/default-avatar.jpg';
 
                 return $return = array('resultado' => true, 'error' => $error, 'datos' => $upfile);
             }
@@ -104,8 +104,8 @@
     {
         //return json_encode("ESTOY EN UPD.PHP");
     $name = $_POST['filename'];
-        if (file_exists($_SERVER['DOCUMENT_ROOT'].'/php/photoTourist_framework_v1/media/'.$name)) {
-            unlink($_SERVER['DOCUMENT_ROOT'].'/php/photoTourist_framework_v1/media/'.$name);
+        if (file_exists($_SERVER['DOCUMENT_ROOT'].'/photoTourist_framework_v2_prettyurls/media/'.$name)) {
+            unlink($_SERVER['DOCUMENT_ROOT'].'/photoTourist_framework_v2_prettyurls/media/'.$name);
 
             return true;
         } else {

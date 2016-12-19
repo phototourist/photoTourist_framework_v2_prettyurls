@@ -25,8 +25,11 @@
 											<ul>
 												<li><a href="<?php amigable('?module=main'); ?>" class="active"><span>Home</span></a></li>
 												<li><a href="about.html"><span>About us</span></a></li>
-												<li><a href="<?php amigable('?module=users&function=signup'); ?>"><span>SIGNUP</span></a></li>
-												<li><a href="<?php amigable('?module=users&function=login_users'); ?>"><span>LOGIN</span></a></li>
+														///////
+												<li id="LogProf">
+						                <a href="<?php amigable('?module=users&function=login_users'); ?>"><span>ACCEDER</span></a>
+						            </li>
+													//////
 												<li><a href="<?php amigable('?module=productsfe&function=list_products'); ?>">List products</a></li>
 												<li><a href="<?php amigable('?module=camtourist&function=camtourist_mapa'); ?>"><span>CamTourist</span></a></li>
 												<li><a href="<?php amigable('?module=contact&function=view_contact'); ?>"><span>CONTACT</span></a></li>
