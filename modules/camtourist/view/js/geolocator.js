@@ -71,10 +71,10 @@ function marcar(map, camtourist) {
     var marker = new google.maps.Marker({position: latlon, map: map,
       title: camtourist.punto_interes,
 
-      icon:'https://projects.com/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
+    //  icon:'https://projects.com/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
 
 
-      //icon:'https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
+    icon:'https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
 
       //icon:{ url: "js/localizacion_maps.png",scaledSize: new google.maps.Size(64, 64)},
       animation: google.maps.Animation.BOUNCE});

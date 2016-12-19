@@ -1,0 +1,69 @@
+17/12/16 11:11:58 PM | ERROR: [8] Undefined variable: fields
+Notice on line 52 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/camtourist/model/DAO/camtourist_dao.class.singleton.php
+ |  | response 200
+17/12/16 11:12:31 PM | ERROR: [8] Undefined variable: fields
+Notice on line 52 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/camtourist/model/DAO/camtourist_dao.class.singleton.php
+ |  | response 200
+17/12/16 11:14:50 PM | ERROR: [8] Undefined variable: fields
+Notice on line 52 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/camtourist/model/DAO/camtourist_dao.class.singleton.php
+ |  | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: name
+Notice on line 18 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: last_name
+Notice on line 19 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: birth_date
+Notice on line 20 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: title_date
+Notice on line 21 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: address
+Notice on line 22 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: user
+Notice on line 23 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: en_lvl
+Notice on line 26 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: interests
+Notice on line 27 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: pais
+Notice on line 29 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: provincia
+Notice on line 30 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: poblacion
+Notice on line 31 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [2] Invalid argument supplied for foreach()
+Warning on line 44 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Use of undefined constant IMG_RURAL_SHOP - assumed 'IMG_RURAL_SHOP'
+Notice on line 29 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/classes/email/email.class.singleton.php
+ | users | response 200
+17/12/16 11:27:53 PM | ERROR: [8] Undefined index: inputName
+Notice on line 49 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/utils/mail.inc.php
+ | users | response 200
+17/12/16 11:32:55 PM | ERROR: [8] Undefined variable: change
+Notice on line 143 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:32:55 PM | ERROR: [8] Undefined variable: sql
+Notice on line 148 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:32:55 PM | ERROR: [8] Use of undefined constant IMG_RURAL_SHOP - assumed 'IMG_RURAL_SHOP'
+Notice on line 29 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/classes/email/email.class.singleton.php
+ | users | response 200
+17/12/16 11:32:55 PM | ERROR: [8] Undefined index: inputName
+Notice on line 49 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/utils/mail.inc.php
+ | users | response 200
+17/12/16 11:44:10 PM | ERROR: [8] Undefined variable: change
+Notice on line 143 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
+17/12/16 11:44:10 PM | ERROR: [8] Undefined variable: sql
+Notice on line 148 in file /var/www/si1/servidor/photoTourist_framework_v2_prettyurls/modules/users/model/DAO/users_dao.class.singleton.php
+ | users | response 200
