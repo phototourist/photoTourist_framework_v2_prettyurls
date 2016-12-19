@@ -54,7 +54,7 @@
             </p>
             <br/>
             <p>
-                <a href="" id="datosOlvidar">Olvide mis datos 😥</a>
+                <a href="<?php amigable('?module=users&function=restore'); ?>" id="datosOlvidar">Olvide mis datos 😥</a>
             </p>
         </div>
       </div>

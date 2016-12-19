@@ -35,6 +35,7 @@
     		if (file_exists($view_path)) {
     			if (isset($arrPassValue))
     				$arrData = $arrPassValue;
+
     			include_once($view_path);
 
     		} else {
@@ -56,7 +57,13 @@
 
         			$result = response_code($rutaVista);
         			$arrData = $result;
+              require_once(VIEW_PATH_INC."header.php");
+  			      require_once(VIEW_PATH_INC."menu.php");
+
               require_once VIEW_PATH_INC_ERROR. $result['code'] .'.php';
+
+              require_once(VIEW_PATH_INC."footer.html");
+
 			//die();
             	//require_once 'view/inc/error.php';
 

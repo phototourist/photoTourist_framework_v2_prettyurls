@@ -9,6 +9,7 @@ RewriteRule ^([^/]*)/([^/]*)/([^/]*)/([^/]*)$ index.php?module=$1&function=$2&pa
 RewriteCond %{REQUEST_FILENAME} !-f
 Rewriterule ^(.*)/(.*)/(.*)$ index.php?module=$1&function=$2&param=$3 [L]
 
+
 RewriteCond %{REQUEST_FILENAME} !-f
 Rewriterule ^(.*)/(.*)$ index.php?module=$1&function=$2 [L,NC]
 

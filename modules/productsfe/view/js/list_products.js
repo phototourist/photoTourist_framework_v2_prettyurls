@@ -22,7 +22,7 @@ function search(keyword) {
 
     $.post("../../productsfe/num_pages/", {'num_pages': true, 'keyword': keyword}, function (data, status) {
 
-      alert(data);
+      //alert(data);
         var json = JSON.parse(data);
         var pages = json.pages;
       //  alert(json.hola);
@@ -78,7 +78,7 @@ function search(keyword) {
 
 function search_product(keyword) {
     $.post("../../productsfe/nom_product/", {'nom_product': keyword}, function (data, status) {
-      alert("jorddd " + data);
+      //alert("jorddd " + data);
         var json = JSON.parse(data);
         var product = json.product_autocomplete;
 
@@ -103,7 +103,7 @@ function search_product(keyword) {
 }
 
 function count_product(keyword) {
-  alert(keyword);
+//  alert(keyword);
     $.post("../../productsfe/count_product/", {'count_product': keyword}, function (data, status) {
       //alert("lalala " +data);
         var json = JSON.parse(data);
@@ -113,21 +113,21 @@ function count_product(keyword) {
       //  alert("colums"+json.colums);
       //  alert("like"+json.like);
       //  alert("load"+json.loadmodel);
-        alert("num_products: " + num_products);
+        //alert("num_products: " + num_products);
 
         if (num_products == 0) {
-          alert("0");
+          //alert("0");
             $("#results").load("../../productsfe/view_error/", {'view_error': false});
           //  $("#results").load("index.php?module=products_FE&function=view_error&view_error=false"); //view_error=false
             $('.pagination').html('');
             reset();
         }
         if (num_products == 1) {
-          alert("=1");
+          //alert("=1");
             search_product(keyword);
         }
         if (num_products > 1) {
-          alert(">1");
+          //alert(">1");
             search(keyword);
         }
     }).fail(function () {
@@ -211,7 +211,7 @@ $(document).ready(function () {
                 //alert(ui.item.label);
 
                 var keyword = ui.item.label;
-                alert("product");
+                //alert("product");
                 count_product(keyword);
             }
         });
