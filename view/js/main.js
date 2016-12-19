@@ -13,7 +13,7 @@ function amigable(url) {
   //  return "https://projects.com/photoTourist_framework_v2_prettyurls" + link;
 
 
-    return "https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls" + link;
+    return "http://localhost/photoTourist_framework_v2_prettyurls" + link;
 
   //return "http://localhost/photoTourist_framework_v2_prettyurls" + link;
 

@@ -80,13 +80,10 @@ function marcar(map, camtourist) {
     var marker = new google.maps.Marker({position: latlon, map: map,
       title: camtourist.punto_interes,
 
-
-     icon:'https://projects.com/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
-      //icon:'http://localhost/photoTourist_framework_v2_prettyurls/modules/camtourist/view/img/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
+      icon:'http://localhost/photoTourist_framework_v2_prettyurls/modules/camtourist/view/img/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
 
 
-
-    icon:'https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
+      //icon:'https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
 
     animation: google.maps.Animation.BOUNCE});
     setTimeout(function(){ marker.setAnimation(null); }, 10000);//controlamos tiempo BOUNCE marcador
