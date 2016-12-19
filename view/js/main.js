@@ -8,8 +8,11 @@ function amigable(url) {
         link +=  "/"+aux[1];
     }
 
-    return "https://projects.com/photoTourist_framework_v2_prettyurls" + link;
+  //  return "https://projects.com/photoTourist_framework_v2_prettyurls" + link;
 
   //  return "https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls" + link;
+
+  return "http://localhost/photoTourist_framework_v2_prettyurls" + link;
+
 
 }

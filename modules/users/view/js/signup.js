@@ -53,8 +53,9 @@ function validate_signup_user() {
         function (response) {
             console.log(response);
             if (response.success) {
-              alert("registro efectuado");
-                //window.location.href = response.redirect;
+              //alert("registro efectuado");
+                window.location.href = response.redirect;
+                //console.log(response.redirect);
             } else {
                 if (response.typeErr === "Email") {
                     $("#signup_email").focus().after("<span class='error'>" + response.error + "</span>");

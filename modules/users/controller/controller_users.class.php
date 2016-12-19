@@ -46,7 +46,7 @@
               $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', array('column' => array('email'), 'like' => array($arrArgument['email'])));
                   if ($arrValue[0]['total'] == 1) {
                       //Tenemos 1 User con email que buscamos
-                  $arrValue = false;
+                      $arrValue = false;
                       $typeErr = 'Email';
                       $error = 'Email ya registrado';
                   }
@@ -74,8 +74,9 @@
               if ($arrValue) {
                   //Si todo el proceso es CORRECTO enviamos Token y redireccionamos
                 sendtoken($arrArgument, 'alta');
-                //$url = amigable('?module=main&function=begin&param=reg', true);
-                $url = amigable('?module=users&function=profile', true);
+                $url = amigable('?module=main&function=begin&param=reg', true);
+                //$url = amigable('?module=users&function=profile', true);
+
                   $jsondata['success'] = true;
                   $jsondata['redirect'] = $url;
                   echo json_encode($jsondata);
@@ -101,6 +102,7 @@
 
       public function verify()
       {
+
           //MADREEEEEEEEE
           if (substr($_GET['param'], 0, 3) == 'Ver') {
               $arrArgument = array(
@@ -112,14 +114,21 @@
 
               set_error_handler('ErrorHandler');
               try {
-                  $value = loadModel(MODEL_USERS, 'users_model', 'update', $arrArgument);
+                  $value = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrArgument);
               } catch (Exception $e) {
                   $value = false;
               }
               restore_error_handler();
 
               if ($value) {
-                  loadView('modules/main/view/', 'main.php');
+                require_once VIEW_PATH_INC.'header.php';
+                require_once VIEW_PATH_INC.'menu.php';
+
+                echo '<br><br>';
+                loadView('modules/main/view/', 'main.php');
+
+                require_once VIEW_PATH_INC.'footer.html';
+
               } else {
                   showErrorPage(1, '', 'HTTP/1.0 503 Service Unavailable', 503);
               }
@@ -183,11 +192,6 @@
                 'select' => '*',
             );
             $user = loadModel(MODEL_USERS, 'users_model', 'select', $arrArgument);
-            /*$jsondata['user'] = $user[0]['user'];
-            $jsondata['avatar'] = $user[0]['avatar'];
-            $jsondata['tipo'] = $user[0]['tipo'];
-            $jsondata['name'] = $user[0]['name'];
-            echo json_encode($jsondata);*/
             echo json_encode($user[0]);
             restore_error_handler();
         } else {
@@ -234,6 +238,7 @@
                   if ($passIsCorrect) {
                       $arrArgument['select'] = '*';
                       $arrValue = loadModel(MODEL_USERS, 'users_model', 'select', $arrArgument);
+                      $jsondata['email'] = $arrValue[0]['email'];
                       $jsondata['user'] = $arrValue[0]['user'];
                       $jsondata['avatar'] = $arrValue[0]['avatar'];
                       $jsondata['tipo'] = $arrValue[0]['tipo'];
@@ -331,7 +336,7 @@
       //DEPENDENT DROP DOWN [Pais, Provincias, Poblaciones]
       public function load_countries_users()
       {
-          if ((isset($_GET['load_country'])) && ($_GET['load_country'] == true)) {
+          //if ((isset($_GET['load_country'])) && ($_GET['load_country'] == true)) {
               $json = array();
               $url = 'http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso/ListOfCountryNamesByName/JSON';
               set_error_handler('ErrorHandler');
@@ -357,12 +362,13 @@
                     exit;
                 }
             }
-          }
+          
       }
 
       public function load_provinces_users()
       {
-          if ((isset($_POST['load_provinces'])) && ($_POST['load_provinces'] == true)) {
+
+         //if ((isset($_GET['load_provinces'])) && ($_GET['load_provinces'] == true)) {
               $jsondata = array();
               $json = array();
               set_error_handler('ErrorHandler');
@@ -382,7 +388,7 @@
                   echo json_encode($jsondata);
                   exit;
               }
-          }
+
       }
 
       public function load_towns_users()
@@ -414,71 +420,74 @@
 
     function modify()
     {
+
         $jsondata = array();
         $userJSON = json_decode($_POST['mod_user_json'], true);
         //$userJSON['password2'] = $userJSON['password'];
-
         $result = validate_user_modify_PHP($userJSON);
+        //json_encode('$result = ' . $result);
+
+
         if ($result['resultado']) {
             $arrArgument = array(
-              'name' => ucfirst($result['name']),
-              'last_name' => ucfirst($result['last_name']),
-              'birth_date' => $result['birth_date'],
-              'title_date' => $result['title_date'],
-              'address' => $result['address'],
-              'user' => $result['user'],
-              'email' => $result['email'],
-              'pass' => password_hash($result['pass'], PASSWORD_BCRYPT),
-              'en_lvl' => strtoupper($result['en_lvl']),
-              'interests' => $result['interests'],
-              'avatar' => $result['avatar'],
-              'pais' => ucfirst($result['pais']),
-              'provincia' => ucfirst($result['provincia']),
-              'poblacion' => ucfirst($result['poblacion']),
-              'tipo' => $result['tipo'],
+              'name' => ucfirst($result['datos']['name']),
+              'last_name' => ucfirst($result['datos']['last_name']),
+              'birth_date' => $result['datos']['birth_date'],
+              'title_date' => $result['datos']['title_date'],
+              'address' => $result['datos']['address'],
+              'user' => $result['datos']['user'],
+              'email' => $result['datos']['email'],
+              'pass' => password_hash($result['datos']['pass'], PASSWORD_BCRYPT),
+              'en_lvl' => strtoupper($result['datos']['en_lvl']),
+              //'interests' => $result['datos']['interests'],
+             'avatar' => $_SESSION['avatar']['datos'],
+             'pais' => ucfirst($result['datos']['pais']),
+             'provincia' => ucfirst($result['datos']['provincia']),
+              'poblacion' => ucfirst($result['datos']['poblacion']),
+            //  'tipo' => $result['datos']['tipo'],
             );
-
-            if(isset($_SESSION['avatar']) && $_SESSION['avatar'] != null && $_SESSION['avatar'].count() > 0){
-              $arrArgument['avatar'] = $_SESSION['avatar'];
-            }
 
             $arrayDatos = array(
-                column => array('email',),
-                like => array($arrArgument['email'],),
-            );
-            $j = 0;
-            foreach ($arrArgument as $clave => $valor) {
-                if ($valor != '') {
-                    $arrayDatos['field'][$j] = $clave;
-                    $arrayDatos['new'][$j] = $valor;
+               "column" => array(
+                 'email'
+               ),
+               "like" => array($arrArgument['email']),
+           );
+
+           $j = 0;
+           foreach ($arrArgument as $clave => $valor) {
+               if ($valor != '') {
+                   $arrayDatos['field'][$j] = $clave;
+                   $arrayDatos['new'][$j] = $valor;
                     ++$j;
                 }
             }
 
             set_error_handler('ErrorHandler');
-            try {
-                $arrValue = loadModel(MODEL_USERS, 'users_model', 'update', $arrayDatos);
-            } catch (Exception $e) {
-                $arrValue = false;
-            }
-            restore_error_handler();
-            if ($arrValue) {
-                $url = amigable('?module=users&function=profile&param=done', true);
-                $jsondata['success'] = true;
-                $jsondata['redirect'] = $url;
-                $_SESSION['avatar'] = null;
-                echo json_encode($jsondata);
-                exit;
-            } else {
-                //$jsondata['success'] = false;
+           try {
+               $arrValue = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrayDatos);
+           } catch (Exception $e) {
+               $arrValue = false;
+           }
+           restore_error_handler();
+
+           if($arrValue){
+           $jsondata["hola"] = $arrayDatos;
+           $jsondata['success'] = true;
+           $jsondata{"redirect"} = amigable('?module=users&function=profile&param=done', true);
+             echo json_encode($jsondata);
+             exit;
+             }else {
+                $jsondata['success'] = false;
                 $jsondata['redirect'] = $url = amigable('?module=users&function=profile&param=503', true);
                 echo json_encode($jsondata);
             }
-          } else {
-              //$jsondata['success'] = false;
+
+             }else{
+           $jsondata['success'] = false;
               $jsondata['datos'] = $result;
               echo json_encode($jsondata);
-          }
+         }
       }
             //FIN Profile
       //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-

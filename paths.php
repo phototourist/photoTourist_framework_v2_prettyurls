@@ -4,7 +4,7 @@
     define('SITE_ROOT', $path);
 
     //SITE_PATH
-    define('SITE_PATH', 'https://' . $_SERVER['HTTP_HOST'] . '/photoTourist_framework_v2_prettyurls/');
+    define('SITE_PATH', 'http://' . $_SERVER['HTTP_HOST'] . '/photoTourist_framework_v2_prettyurls/');
 
 		//CSS
 		define('CSS_PATH', SITE_PATH . 'view/css/');

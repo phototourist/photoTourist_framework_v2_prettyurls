@@ -49,7 +49,7 @@
     position: relative;
     z-index: 1;
 }
-#alertbanner:hover:after {
+#alertbanner:hover:after {/*etiqueta ocultar AlertBanner*/
     background: hsla(0,0%,0%,.8);
     border-radius: 3px;
     color: #f6f6f6;
@@ -63,7 +63,7 @@
     top: 50px;
     width: 120px;
 }
-#alertbanner:hover:before {
+#alertbanner:hover:before {/*Flecha etiqueta ocultar AlertBanner*/
     border-bottom: 10px solid hsla(0,0%,0%,.8);
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
@@ -79,7 +79,8 @@
     display: none;
 }
 .alertbanner {
-    background-color: #0c325a;
+    /*background-color: #0c325a;*/
+    background-color: #006666;
     background-image: -webkit-linear-gradient(135deg, transparent,
         transparent 25%, hsla(0,0%,0%,.05) 25%,
         hsla(0,0%,0%,.05) 50%, transparent 50%,
@@ -153,6 +154,18 @@
     50% { opacity: 1; }
     100% { top: 0; }
 }
+/******************Menu Login*************************/
+
+#menuImg{
+    vertical-align: middle;
+    margin-right: 5px;
+
+}
+#LogProf{
+    font-weight: bold;
+
+}
+
 
 /**** Dropzone ****/
 

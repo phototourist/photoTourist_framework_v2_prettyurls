@@ -9,12 +9,9 @@
         <!--<div id='ubicacion'></div>-->
 
 
-        <!-- Se escribe un mapa con la localizacion anterior-->
-        <div id="mapa"></div>
-        <div id="mapholder"></div>
         <div class="form-group">
-            <label>Puntos CamTourist</label><br />
-            <select name="camtourist_puntos" id="camtourist_puntos" >
+            <label>Puntos CamTourist: </label></br>
+            <select name="camtourist_puntos" id="camtourist_puntos" onchange="cargarMap()">
                 <option value ="Select CamTourist" selected>Select CamTourist</option>
                 <option value="barcelona">Barcelona</option>
                 <option value="benidorm">Benidorm</option>
@@ -27,6 +24,11 @@
             </select>
             <div id="e_camtourist_puntos"></div>
         </div>
+
+        <!-- Se escribe un mapa con la localizacion anterior-->
+        <div id="mapa"></div>
+        <div id="mapholder"></div>
+
         <div class="camtourist"></div><!--listado de camtourist-->
         <div id="map-canvas"/></div>
     </div>

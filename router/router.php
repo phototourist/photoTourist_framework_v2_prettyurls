@@ -21,6 +21,7 @@
 
     function handlerRouter()
     {
+
         if (!empty($_GET['module'])) {
             $URI_module = $_GET['module'];
         } else {

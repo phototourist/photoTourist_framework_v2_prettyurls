@@ -1,14 +1,20 @@
+var databasePositions = [];
+
 $(document).ready(start);
 function start() {
   $.post(amigable("?module=camtourist&function=maploader"), {value: {send: true}},
     //$.post("/camtourist/maploader", {value: {send: true}},
+
     function (response) {
         //alert(response.success);
         if (response.success) {
                 if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(mostrarUbicacion);
-                cargarMap(response.camtourist);
-                cargarCamtourist(response.camtourist);
+                databasePositions = response.camtourist;
+                /*cargarMap(response.camtourist);
+                cargarCamtourist(response.camtourist);*/
+                cargarMap(databasePositions);
+                cargarCamtourist(databasePositions);
             } else {
                 alert("¡Error! Este navegador no soporta la Geolocalización.");
             }
@@ -35,7 +41,10 @@ function start() {
             alert('Uncaught Error: ' + xhr.responseText);
         }
     });
+
+    //
 }
+
 
 function mostrarUbicacion(position) {
     var times = position.timestamp;
@@ -66,23 +75,18 @@ function cargarCamtourist(of) {
 
 function marcar(map, camtourist) {
 
-  var image = './localizacion_maps.png';
+  //  var image = './localizacion_maps.png';
     var latlon = new google.maps.LatLng(camtourist.latitud, camtourist.longitud);
     var marker = new google.maps.Marker({position: latlon, map: map,
       title: camtourist.punto_interes,
 
-      icon:'https://projects.com/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
+      icon:'http://localhost/photoTourist_framework_v2_prettyurls/modules/camtourist/view/img/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
 
 
       //icon:'https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png' ,scaledSize: new google.maps.Size(64, 64),
 
-      //icon:{ url: "js/localizacion_maps.png",scaledSize: new google.maps.Size(64, 64)},
-      animation: google.maps.Animation.BOUNCE});
+    animation: google.maps.Animation.BOUNCE});
     setTimeout(function(){ marker.setAnimation(null); }, 10000);//controlamos tiempo BOUNCE marcador
-    //marker.setIcon('http://var/www/html/photoTourist_framework_v2_prettyurls/modules/camtourist/view/js/localizacion_maps.png/');
-
-//marker.setIcon('http://www.googlemapsmarkers.com/v1/006666/');
-//marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
 
     var infowindow = new google.maps.InfoWindow({
         content: '<div id="iw-container">'+
@@ -128,14 +132,28 @@ function marcar(map, camtourist) {
 }
 
 function cargarMap(arrArguments) {
+    if (arrArguments === undefined || arrArguments == null)
+      arrArguments = databasePositions;
+
     var x = document.getElementById("mapa");
     navigator.geolocation.getCurrentPosition(showPosition, showError);
 
+    var posicion=ciudadCamTourist();//PRUEBA FUNCION, ese valor ira dentro de showPosition
+    //alert ('posicion1 = ' + posicion);
+    //ciudadCamTourist();
+
     function showPosition(position){
 
-        //Cordenadas de Prueba que muestran Tarragona
-        var lat = 41.119116;
-        var lon = 1.244483;
+        //Cordenadas de Prueba que muestran Tarragona punto inicio
+        //var lat = 41.119116;
+        //var lon = 1.244483;
+
+        //////////////////////////////////
+        var lat = posicion[0];
+        var lon = posicion[1];
+        //alert ('posicion[0] = ' + posicion[0]);
+        //alert ('posicion[1] = ' + posicion[1]);
+        //////////////////////////////////////
 
         //Estas variables recogen nuestra posición actual
         //var lat = position.coords.latitude;
@@ -160,6 +178,7 @@ function cargarMap(arrArguments) {
         for (var i = 0; i < arrArguments.length; i++)
             marcar(map, arrArguments[i]);
     }
+
     function showError(error){
         switch (error.code){
             case error.PERMISSION_DENIED:
@@ -175,4 +194,50 @@ function cargarMap(arrArguments) {
                 x.innerHTML = "Ha ocurrido un error desconocido.";
                 break;
         }
-    }}
+    }
+  }
+
+  function ciudadCamTourist(){
+    var ciudad=document.getElementById('camtourist_puntos').value;
+    var posicion = [];
+    //alert ('ciudad');
+    switch(ciudad){
+       case 'barcelona':
+        posicion = ["41.381158", "2.176795"];
+         break;
+
+       case 'benidorm':
+         posicion = ["38.544013", "-0.131881"];
+         break;
+
+       case 'cordoba':
+         posicion = ["37.885205", "-4.776041"];
+         break;
+
+       case 'granada':
+         posicion = ["37.174396", "-3.598528"];
+         break;
+
+       case 'madrid':
+         posicion = ["40.418851", "-3.691991"];
+         break;
+
+       case 'ontinyent':
+         posicion = ["38.821218", "-0.609599"];
+         break;
+
+       case 'sevilla':
+         posicion = ["37.388655", "-5.994696"];
+         break;
+
+       case 'toledo':
+         posicion = ["39.856709", "-4.024796"];
+         break;
+
+       default:
+        posicion = ["39.856709", "-4.024796"];
+        break;
+     }
+     //alert(posicion);
+     return posicion;
+   }

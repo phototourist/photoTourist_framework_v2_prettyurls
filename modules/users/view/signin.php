@@ -50,7 +50,7 @@
         <div class=""><hr></div>
         <div class="form-contact reg ">
             <p>No tengo cuenta
-                <a href="" id="">REGISTRARME!!</a>
+                <a href="<?php amigable('?module=users&function=signup'); ?>" id="">REGISTRARME!!</a>
             </p>
             <br/>
             <p>

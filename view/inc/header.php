@@ -46,6 +46,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+	<!-- Código para Tipografías Especiales de Google Font-->
+	<link href="https://fonts.googleapis.com/css?family=Unica+One" rel="stylesheet">
+
 	<!-- Llamada al main.js donde está la función amigable---->
   <script type="text/javascript" src="<?php echo JS_PATH ?>main.js"></script>
 

@@ -6,7 +6,7 @@
 					<h1 class="textBanner">TUS FOTOS DE VIAJE SERÁN DIFERENTES</h1>
 					<p>PhotoTourist: Tu maleta de recuerdos</p>
 					<div class="banner-btn">
-						<a class="btn btn-primary btn-lg" href="#" role="button">Regístrate Gratis</a>
+						<a class="btn btn-primary btn-lg" href="<?php amigable('?module=users&function=signup'); ?>" role="button">Regístrate Gratis</a>
 				</div>
 			</div>
 		</div>
@@ -20,6 +20,7 @@
 			<div class="col-md-3 services-left">
 				<img src="<?php echo IMG_PATH ?>service-1.png" alt="" />
 				<p>Localiza a las CamTourist</p>
+				<span class="s-two"> </span>
 			</div>
 			<div class="col-md-3 services-left">
 				<img src="<?php echo IMG_PATH ?>service-2.png" alt="" />
@@ -79,7 +80,7 @@
 			</div>
 		</div>
 		<div class="ad-btn">
-			<a href="#">Regístrate Gratis</a>
+			<a href="<?php amigable('?module=users&function=signup'); ?>">Regístrate Gratis</a>
 		</div>
 	</div>
 </div>
@@ -164,8 +165,7 @@
 					<a href="#">Next testimonial</a>
 				</div>
 			</div>
-			<div class="t-btn">
-				<a href="#">Regístrate Gratis</a>
+			<div class="t-btn"><a href="<?php amigable('?module=users&function=signup'); ?>">Regístrate Gratis</a>
 			</div>
 		</div>
 	</div>
@@ -209,8 +209,7 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
-		<div class="ad-btn term-btn">
-			<a href="#">Regístrate Gratis</a>
+		<div class="ad-btn term-btn"><a href="<?php amigable('?module=users&function=signup'); ?>">Regístrate Gratis</a>
 		</div>
 	</div>
 </div>

@@ -37,63 +37,41 @@ function validate_user_modify_PHP($value){
     $error = array();
     $valido = true;
     $filtro = array(
-      'email' => array(
-          'filter' => FILTER_CALLBACK,
-          'options' => 'valida_email',
-      )
+      'name' => array(
+          'filter' => FILTER_VALIDATE_REGEXP,
+          'options' => array('regexp' => '/^[A-Za-z]{2,30}$/'),
+      ),
+      'last_name' => array(
+          'filter' => FILTER_VALIDATE_REGEXP,
+          'options' => array('regexp' => '/^[A-Za-z]{2,30}$/'),
+      ),
+      'birth_date' => array(
+            'filter' => FILTER_VALIDATE_REGEXP,
+            //'options' => array('regexp' => '/^(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d$/'),
+            'options' => array('regexp' => '/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/'),
+        ),
+        'title_date' => array(
+              'filter' => FILTER_VALIDATE_REGEXP,
+              //'options' => array('regexp' => '/^(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d$/'),
+              'options' => array('regexp' => '/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/'),
+          ),
+        'address' => array(
+            'filter' => FILTER_VALIDATE_REGEXP,
+            'options' => array('regexp' => '/^[a-z0-9- -.]+$/i'),
+        ),
+        'user' => array(
+            'filter' => FILTER_VALIDATE_REGEXP,
+            'options' => array('regexp' => '/^[0-9a-zA-Z]{2,20}$/'),
+        ),
+        'pass' => array(
+            'filter' => FILTER_VALIDATE_REGEXP,
+            'options' => array('regexp' => '/^[0-9a-zA-Z]{6,32}$/'),
+        ),
+
     );
 
-    //Como los campos no son obligatorios los validamos 1 X 1
-    if ($value['pass']){
-
-      $filtro['pass'] = array(
-          'filter' => FILTER_VALIDATE_REGEXP,
-          'options' => array('regexp' => '/^.{6,}$/'));
-    }
-
-    if ($value['name']){
-
-      $filtro['name'] = array(
-        'filter' => FILTER_VALIDATE_REGEXP,
-        'options' => array('regexp' => '/^[A-Za-z]{2,30}$/'));
-    }
-
-    if ($value['last_name']){
-
-      $filtro['last_name'] = array(
-        'filter' => FILTER_VALIDATE_REGEXP,
-        'options' => array('regexp' => '/^[A-Za-z]{2,30}$/'));
-    }
-    //Atención con las fechas, ahora esta en formato Español [dd/mm/yyyy]
-    if ($value['birth_date']){
-
-      $filtro['birth_date'] = array(
-        'filter' => FILTER_VALIDATE_REGEXP,
-        'options' => array('regexp' => '/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/'));
-    }
-
-    if ($value['title_date']){
-
-      $filtro['title_date'] = array(
-        'filter' => FILTER_VALIDATE_REGEXP,
-        'options' => array('regexp' => '/^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/'));
-    }
-
-    if ($value['address']){
-
-      $filtro['address'] = array(
-        'filter' => FILTER_VALIDATE_REGEXP,
-        'options' => array('regexp' => '/^[a-z0-9- -.]+$/i'));
-    }
-
-    if ($value['user']){//Este campo se mejorará en el futuro o será el QR
-
-      $filtro['user'] = array(
-        'filter' => FILTER_VALIDATE_REGEXP,
-        'options' => array('regexp' => '/^[0-9a-zA-Z]{2,20}$/'));
-    }
-
     $resultado = filter_var_array($value, $filtro);
+
     $valido = true;
 
     //Valores no filtrados con Expresiones Regulares
@@ -104,64 +82,54 @@ function validate_user_modify_PHP($value){
     $resultado['provincia'] = $value['provincia'];
     $resultado['poblacion'] = $value['poblacion'];
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    if ($resultado['birth_date']) {
+    if (isset($resultado['birth_date']) && !$resultado['birth_date']) {
         //validate to user's over 16
         $dates = validateAge($resultado['birth_date']);
 
         if (!$dates) {
             $error['birth_date'] = 'User must have more than 16 years';
             $valido = false;
-        }
+          } else {
+            $error['birth_date'] = 'error format date (mm/dd/yyyy)';
+            $valido = false;
+          }
     }
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    if (!$resultado['email']) {
+
+    if (isset($resultado['email']) && !$resultado['email']) {
         $error['email'] = 'error format email (example@example.com)';
         $valido = false;
     }
 
-    if (!$resultado['pass']) {
+    if (isset($resultado['pass']) && !$resultado['pass']) {
         $error['pass'] = 'Password debe tener más de 6 caracteres';
         $valido = false;
     }
 
-    if (!$resultado['name']) {
+
+    if (isset($resultado['name']) && !$resultado['name']) {
         $error['name'] = 'Name must be 2 to 30 letters';
         $valido = false;
     }
 
-    if (!$resultado['user']) {
+    if (isset($resultado['user']) && !$resultado['user']) {
         $error['user'] = 'User must be 2 to 20 characters';
         $valido = false;
     }
 
-    if (!$resultado['email']) {
-        $error['email'] = 'error format email (example@example.com)';
-        $valido = false;
-    }
-
-    if (!$resultado['pass']) {
-        $error['pass'] = 'Pass must be 6 to 32 characters';
-        $valido = false;
-    }
-
-    if (!$resultado['address']) {
+    if (isset($resultado['address']) && !$resultado['address']) {
         $error['address'] = "Address don't have  symbols.";
         $valido = false;
     }
 
-    if (!$resultado['last_name']) {
+    if (isset($resultado['last_name']) && !$resultado['last_name']) {
         $error['last_name'] = 'Last name must be 2 to 30 letters';
         $valido = false;
     }
 
-    if (!$resultado['birth_date']) {
-            $error['birth_date'] = 'error format date (mm/dd/yyyy)';
-            $valido = false;
-    }
-
     //Podemos quitar una fecha, ya no tiene sentido
-    if (!$resultado['title_date']) {
+    if (isset($resultado['title_date']) && !$resultado['title_date']) {
         if ($resultado['title_date'] == '') {
             $error['title_date'] = "this camp can't empty";
             $valido = false;
@@ -171,7 +139,12 @@ function validate_user_modify_PHP($value){
         }
     }
 
-    return $return = array('resultado' => $valido, 'error' => $error, 'datos' => $resultado);
+    //$return = array('resultado' => $valido, 'error' => $error, 'datos' => $resultado);
+    $return = array('resultado' => $valido, 'error' => $error, 'datos' => $value);
+
+    return $return;
+    //json_encode('$valido = ' . $valido);
+
 }
 
 function validate_user($value){

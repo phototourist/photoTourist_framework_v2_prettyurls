@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css">
 <script type="text/javascript" src="<?php echo USERS_JS_PATH ?>profile.js"></script>
 
+
 <section id="contact-page">
     <div class="container">
         <div class="center">
@@ -94,23 +95,11 @@
                     </div>
                     <br />
                     <div class="form-group">
-                        <label>Confirm Password *</label>
-                        <input type="password" id="conf_pass" name="conf_pass" placeholder="confirm pass" value="" class="form-control" required="required">
-                        <div id="e_conf_pass"></div>
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        <label>E-mail *</label>
-                        <input type="" id="email" name="email" placeholder="e-mail" class="form-control" value="" required="required" >
+                        <label>E-mail </label>
+                        <input type="" id="email" name="email" placeholder="e-mail" class="form-control" value="" required="required" readonly>
                         <div id="e_email"></div>
                     </div>
                     <br />
-                    <!--<div class="form-group">
-                        <label>Confirm Email *</label>
-                        <input type="" id="conf_email" name="conf_email" placeholder="confirm e-mail" value="" class="form-control" required="required" >
-                        <div id="e_conf_email"></div>
-                    </div>
-                    <br />-->
                     <div class="form-group">
                         <label>Interests  *</label><br>
 
