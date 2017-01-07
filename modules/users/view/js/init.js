@@ -3,18 +3,15 @@ $(document).ready(function () {
     var user = Tools.readCookie("user");
     //alert(user);
     if (user) {
-      $("head").append("<script src='https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/modules/users/view/js/logout.js'></script>");
-
-        //console.log(user); //yomogan|https://projects-alumnes-yomogan.c9users.io/proj_final_login/JoinElderly//media/flowers.png|client|yomogan
+      $("head").append("<script src='http://localhost/photoTourist_framework_v2_prettyurls/modules/users/view/js/logout.js'></script>");
         user = user.split("|");
-        $("#LogProf").html("<a href=" + amigable('?module=users&function=profile') + "><img id='menuImg' class='icon rounded' src='" + user[1] + "'/>" + user[3] + "</a>");
+        $("#LogProf").html("<a href=" + amigable('?module=users&function=profile') + "><img id='menuImg' class='icon rounded' src='" + user[2] + "'/>" + user[3] + "</a>");
         $("#LogProf").after("<li><a id='logout' href='#' >Log Out</a></li>");
-        if ( (user[2] === "worker") || (user[2] === "client")  ) {
-            $("#LogProf").before("<li><a href=" + amigable('?module=camtourist&function=camtourist_mapa') + ">Mis fotos</a></li>")
-        } else if (user[2] === "admin") {
+        if ( (user[3] === "worker") || (user[3] === "client")  ) {
+            $("#LogProf").before("<li><a href=" + amigable('?module=productsfe&function=list_products') + ">Mis fotos</a></li>")
+        } else if (user[3] === "admin") {
             $("#LogProf").before("<li><a href=" + amigable('?module=admin') + ">Administrar</a></li>")
         }
-        //$("head").append("<script src='http://localhost/photoTourist_framework_v2_prettyurls/modules/users/view/js/logout.js'></script>");
     }
 
     var url = window.location.href;

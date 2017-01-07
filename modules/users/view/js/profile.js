@@ -312,7 +312,7 @@ $.get(amigable("?module=users&function=load_countries_users"),
             }
 
             if (response === 'error' || !isArray) {
-                  load_countries_v2("https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/resources/ListOfCountryNamesByName.json" ,pais);
+                  load_countries_v2("http://localhost/photoTourist_framework_v2_prettyurls/resources/ListOfCountryNamesByName.json" ,pais);
 
             } else {
                 load_countries_v2(amigable("?module=users&function=load_countries_users&load_country=true"), pais); //oorsprong.org
@@ -324,7 +324,7 @@ $.get(amigable("?module=users&function=load_countries_users"),
         })
     .fail(function(response) {
         //load_countries_v2("resources/ListOfCountryNamesByName.json");
-        load_countries_v2("https://phototourist.josando.tk/photoTourist_framework_v2_prettyurls/resources/ListOfCountryNamesByName.json");
+        load_countries_v2("http://localhost/photoTourist_framework_v2_prettyurls/resources/ListOfCountryNamesByName.json");
     });
 }
 
