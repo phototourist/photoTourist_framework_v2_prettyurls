@@ -537,25 +537,25 @@ function validate_user() {
       result = false;
       return false;
   } else if ($("#last_name").val() == "" || $("#last_name").val() == "Introduce last name") {
-      $("#last_name").focus().after("<span class='error'>Introduce last name</span>");
-      result = false;
-      return false;
+      //$("#last_name").focus().after("<span class='error'>Introduce last name</span>");
+      //result = false;
+      //return false;
   } else if (!string_reg.test($("#last_name").val())) {
       $("#last_name").focus().after("<span class='error'>Last name must be 2 to 30 letters</span>");
       result = false;
       return false;
   } else if ($("#birth_date").val() == "" || $("#birth_date").val() == "Introduce date of birth") {
-      $("#birth_date").focus().after("<span class='error'>Introduce date of birth</span>");
-      result = false;
-      return false;
+    //  $("#birth_date").focus().after("<span class='error'>Introduce date of birth</span>");
+    //  result = false;
+      //return false;
   } else if (!date_reg.test($("#birth_date").val())) {
       $("#birth_date").focus().after("<span class='error'>error format date (mm/dd/yyyy)</span>");
       result = false;
       return false;
   } else if ($("#title_date").val() == "" || $("#title_date").val() == "Introduce date of title") {
-      $("#title_date").focus().after("<span class='error'>Introduce date of title</span>");
-      result = false;
-      return false;
+      //$("#title_date").focus().after("<span class='error'>Introduce date of title</span>");
+      //result = false;
+      //return false;
   } else if (!date_reg.test($("#title_date").val())) {
       $("#title_date").focus().after("<span class='error'>error format date (mm/dd/yyyy)</span>");
       result = false;
@@ -563,9 +563,9 @@ function validate_user() {
   }
 
   if ($("#address").val() == "" || $("#address").val() == "Introduce address") {
-      $("#address").focus().after("<span class='error'>Introduce address</span>");
-      result = false;
-      return false;
+      //$("#address").focus().after("<span class='error'>Introduce address</span>");
+      //result = false;
+      //return false;
   } else if (!address_reg.test($("#address").val())) {
       $("#address").focus().after("<span class='error'>Address don't have  symbols.</span>");
       result = false;
@@ -583,9 +583,9 @@ function validate_user() {
   }
 
   if ($("#pass").val() == "" || $("#pass").val() == "password") {
-      $("#pass").focus().after("<span class='error'>Introduce pass</span>");
-      result = false;
-      return false;
+    //  $("#pass").focus().after("<span class='error'>Introduce pass</span>");
+      //result = false;
+      //return false;
   } else if (!pass_reg.test($("#pass").val())) {
       $("#pass").focus().after("<span class='error'>Last name must be 6 to 32 characters.</span>");
       result = false;

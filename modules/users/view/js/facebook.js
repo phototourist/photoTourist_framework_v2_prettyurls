@@ -46,7 +46,9 @@ function getUserInfo() {
         FB.api('/me', {fields: 'id, first_name, last_name, email'},//estos son los campos que devuelve Facebook
         function (response) {
           //hacer un console log para ver que da Facebook
-            var data = {"token": response.id, "name": response.first_name, "last_name": response.last_name, "email": response.email};//guardamos en Token id FB
+          
+          //ANTES ESTABA token y no id-facebook
+            var data = {"id_facebook": response.id, "name": response.first_name, "last_name": response.last_name, "email": response.email};//guardamos en Token id FB
             var datos_social = JSON.stringify(data);
 
             $.post(amigable('?module=users&function=social_signin'), {user: datos_social},

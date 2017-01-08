@@ -20,9 +20,9 @@ function search(keyword) {
   //  else
         //url = "../../products_FE/num_pages/", {'num_pages': true, 'keyword': keyword}; //"index.php?module=products_FE&function=num_pages&num_pages=true&keyword=" + keyword;//urlbase + "&num_pages=true&keyword=" + keyword;
 
-    $.post("../../productsfe/num_pages/", {'num_pages': true, 'keyword': keyword}, function (data, status) {
+    $.post("../productsfe/num_pages/", {'num_pages': true, 'keyword': keyword}, function (data, status) {
 
-      //alert(data);
+    alert(data);
         var json = JSON.parse(data);
         var pages = json.pages;
       //  alert(json.hola);
@@ -32,7 +32,7 @@ function search(keyword) {
         //    url = "index.php?module=products_FE&function=idProduct";
         //else
           //  url = "index.php?module=products_FE&function=idProduct&keyword=" + keyword;
-            $("#results").load("../../productsfe/idProduct/", {'keyword': keyword});
+            $("#results").load("../productsfe/idProduct/", {'keyword': keyword});
         //$("#results").load("../../products/idProduct/", {'page_num': num, 'keyword': keyword});
 
         if (pages !== 0) {
@@ -47,7 +47,7 @@ function search(keyword) {
             }).on("page", function (e, num) {
                 e.preventDefault();
 
-                  $("#results").load("../../productsfe/idProduct/", {'page_num': num, 'keyword': keyword});
+                  $("#results").load("../productsfe/idProduct/", {'page_num': num, 'keyword': keyword});
 /*
                 if (!keyword)
                     $("#results").load("index.php?module=products_FE&function=idProduct", {'page_num': num});
@@ -57,7 +57,7 @@ function search(keyword) {
                 reset();
             });
         } else {
-          $("#results").load("../../productsfe/view_error/", {'view_error': false});
+          $("#results").load("../productsfe/view_error/", {'view_error': false});
           //  $("#results").load("index.php?module=products_FE&function=view_error&view_error=false"); //view_error=false
             $('.pagination').html('');
             reset();
@@ -67,7 +67,7 @@ function search(keyword) {
     }).fail(function (xhr) {
       alert("error");
 
-        $("#results").load("../../productsfe/view_error/", {'view_error': true});
+        $("#results").load("../productsfe/view_error/", {'view_error': true});
         //$("#results").load("index.php?module=products_FE&function=view_error&view_error=true");
         $('.pagination').html('');
         reset();
@@ -77,7 +77,7 @@ function search(keyword) {
 
 
 function search_product(keyword) {
-    $.post("../../productsfe/nom_product/", {'nom_product': keyword}, function (data, status) {
+    $.post("../productsfe/nom_product/", {'nom_product': keyword}, function (data, status) {
       //alert("jorddd " + data);
         var json = JSON.parse(data);
         var product = json.product_autocomplete;
@@ -96,7 +96,7 @@ function search_product(keyword) {
         price_product.setAttribute("class", "special");
 
     }).fail(function (xhr) {
-        $("#results").load("../../productsfe/view_error_false/", {'view_error': false});//"modules/products_FE/controller/controller_products_FE.class.php?view_error=false");
+        $("#results").load("../productsfe/view_error_false/", {'view_error': false});//"modules/products_FE/controller/controller_products_FE.class.php?view_error=false");
         $('.pagination').html('');
         reset();
     });
@@ -104,7 +104,7 @@ function search_product(keyword) {
 
 function count_product(keyword) {
 //  alert(keyword);
-    $.post("../../productsfe/count_product/", {'count_product': keyword}, function (data, status) {
+    $.post("../productsfe/count_product/", {'count_product': keyword}, function (data, status) {
       //alert("lalala " +data);
         var json = JSON.parse(data);
         var num_products = json.num_products;
@@ -117,7 +117,7 @@ function count_product(keyword) {
 
         if (num_products == 0) {
           //alert("0");
-            $("#results").load("../../productsfe/view_error/", {'view_error': false});
+            $("#results").load("../productsfe/view_error/", {'view_error': false});
           //  $("#results").load("index.php?module=products_FE&function=view_error&view_error=false"); //view_error=false
             $('.pagination').html('');
             reset();
@@ -131,7 +131,7 @@ function count_product(keyword) {
             search(keyword);
         }
     }).fail(function () {
-        $("#results").load("../../productsfe/view_error/", {'view_error': true});
+        $("#results").load("../productsfe/view_error/", {'view_error': true});
       //  $("#results").load("index.php?module=products_FE&function=view_error&view_error=true"); //view_error=false
         $('.pagination').html('');
         reset();
@@ -188,7 +188,7 @@ $(document).ready(function () {
     });//"index.php?module=users&function=load_users&load=true"
 //modules/products_FE/controller/controller_products_FE.class.php?
 
-    $.post("../../productsfe/autocomplete/", {'autocomplete': true}, function (data, status) {
+    $.post("../productsfe/autocomplete/", {'autocomplete': true}, function (data, status) {
     //$.get("index.php?module=products_FE&function=autocomplete&autocomplete=true", function (data, status) {
   //alert(data);
         var json = JSON.parse(data);
@@ -216,7 +216,7 @@ $(document).ready(function () {
             }
         });
     }).fail(function (xhr) {
-        $("#results").load("../../productsfe/view_error/", {'view_error': true});
+        $("#results").load("../productsfe/view_error/", {'view_error': true});
         //$("#results").load("index.php?module=products_FE&function=view_error&view_error=false"); //view_error=false
         $('.pagination').html('');
         reset();

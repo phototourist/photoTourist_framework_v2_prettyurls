@@ -1,7 +1,8 @@
 <?php
 
 //Funcion para validar los 2 campos del Registro (SignUp)
-function validate_user_signup_PHP($value){
+function validate_user_signup_PHP($value)
+{
     $error = array();
     $valido = true;
     $filtro = array(
@@ -12,7 +13,7 @@ function validate_user_signup_PHP($value){
         'pass' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
             //'options' => array('regexp' => '/^[0-9a-zA-Z]{6,32}$/'),
-            'options' => array('regexp' => '/^.{6,}$/')
+            'options' => array('regexp' => '/^.{6,}$/'),
         ),
     );
 
@@ -33,7 +34,8 @@ function validate_user_signup_PHP($value){
 }
 
 //Funcion para validar los campos del Profile [Solo Email es obligatorio]
-function validate_user_modify_PHP($value){
+function validate_user_modify_PHP($value)
+{
     $error = array();
     $valido = true;
     $filtro = array(
@@ -82,31 +84,36 @@ function validate_user_modify_PHP($value){
     $resultado['provincia'] = $value['provincia'];
     $resultado['poblacion'] = $value['poblacion'];
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    if (isset($resultado['birth_date']) && !$resultado['birth_date']) {
-        //validate to user's over 16
+    if ($value['birth_date'] === '') {
+        $valido = true;
+    } else {
+        if (isset($resultado['birth_date']) && !$resultado['birth_date']) {
+            //validate to user's over 16
         $dates = validateAge($resultado['birth_date']);
-
-        if (!$dates) {
-            $error['birth_date'] = 'User must have more than 16 years';
-            $valido = false;
-          } else {
-            $error['birth_date'] = 'error format date (mm/dd/yyyy)';
-            $valido = false;
-          }
+            if (!$dates) {
+                $error['birth_date'] = 'User must have more than 16 years';
+                $valido = false;
+            } else {
+                $error['birth_date'] = 'error format date (mm/dd/yyyy)';
+                $valido = false;
+            }
+        }
     }
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-
 
     if (isset($resultado['email']) && !$resultado['email']) {
         $error['email'] = 'error format email (example@example.com)';
         $valido = false;
     }
 
-    if (isset($resultado['pass']) && !$resultado['pass']) {
-        $error['pass'] = 'Password debe tener más de 6 caracteres';
-        $valido = false;
+    if ($value['pass'] === '') {
+        $valido = true;
+    } else {
+        if (isset($resultado['pass']) && !$resultado['pass']) {
+            $error['pass'] = 'Password debe tener más de 6 caracteres';
+            $valido = false;
+        }
     }
-
 
     if (isset($resultado['name']) && !$resultado['name']) {
         $error['name'] = 'Name must be 2 to 30 letters';
@@ -118,37 +125,45 @@ function validate_user_modify_PHP($value){
         $valido = false;
     }
 
-    if (isset($resultado['address']) && !$resultado['address']) {
-        $error['address'] = "Address don't have  symbols.";
-        $valido = false;
-    }
-
-    if (isset($resultado['last_name']) && !$resultado['last_name']) {
-        $error['last_name'] = 'Last name must be 2 to 30 letters';
-        $valido = false;
-    }
-
-    //Podemos quitar una fecha, ya no tiene sentido
-    if (isset($resultado['title_date']) && !$resultado['title_date']) {
-        if ($resultado['title_date'] == '') {
-            $error['title_date'] = "this camp can't empty";
-            $valido = false;
-        } else {
-            $error['title_date'] = 'error format date (mm/dd/yyyy)';
+    if ($value['address'] === '') {
+        $valido = true;
+    } else {
+        if (isset($resultado['address']) && !$resultado['address']) {
+            $error['address'] = "Address don't have  symbols.";
             $valido = false;
         }
     }
-
+    if ($value['last_name'] === '') {
+        $valido = true;
+    } else {
+        if (isset($resultado['last_name']) && !$resultado['last_name']) {
+            $error['last_name'] = 'Last name must be 2 to 30 letters';
+            $valido = false;
+        }
+    }
+    //Podemos quitar una fecha, ya no tiene sentido
+    if ($value['birth_date'] === '') {
+        $valido = true;
+    } else {
+        if (isset($resultado['title_date']) && !$resultado['title_date']) {
+            if ($resultado['title_date'] == '') {
+                $error['title_date'] = "this camp can't empty";
+                $valido = false;
+            } else {
+                $error['title_date'] = 'error format date (mm/dd/yyyy)';
+                $valido = false;
+            }
+        }
+    }
     //$return = array('resultado' => $valido, 'error' => $error, 'datos' => $resultado);
     $return = array('resultado' => $valido, 'error' => $error, 'datos' => $value);
 
     return $return;
     //json_encode('$valido = ' . $valido);
-
 }
 
-function validate_user($value){
-
+function validate_user($value)
+{
     $error = array();
     $valido = true;
     $filtro = array(
@@ -201,7 +216,6 @@ function validate_user($value){
     $resultado['provincia'] = $value['provincia'];
     $resultado['poblacion'] = $value['poblacion'];
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-
 
     if ($resultado['birth_date']) {
         //validate to user's over 16
@@ -340,7 +354,7 @@ function valida_email($email)
 {
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      //$emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+        //$emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
         //if (filter_var($email, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^.{5,50}$/')))) {
             return $email;
         //}
@@ -350,34 +364,39 @@ function valida_email($email)
 }
 
 //Crear un get_gravatar
-function get_gravatar($email, $s = 80, $d = 'wavatar', $r = 'g', $img = false, $atts = array()) {
+function get_gravatar($email, $s = 80, $d = 'wavatar', $r = 'g', $img = false, $atts = array())
+{
     $email = trim($email);
     $email = strtolower($email);
     $email_hash = md5($email);
 
-    $url = "https://www.gravatar.com/avatar/" . $email_hash;
+    $url = 'https://www.gravatar.com/avatar/'.$email_hash;
     $url .= md5(strtolower(trim($email)));
     $url .= "?s=$s&d=$d&r=$r";
     if ($img) {
-        $url = '<img src="' . $url . '"';
-        foreach ($atts as $key => $val)
-            $url .= ' ' . $key . '="' . $val . '"';
+        $url = '<img src="'.$url.'"';
+        foreach ($atts as $key => $val) {
+            $url .= ' '.$key.'="'.$val.'"';
+        }
         $url .= ' />';
     }
+
     return $url;
 }
 //Fin Gravatar
 
 //Funcion envio token
-function sendtoken($arrArgument, $type) {
+function sendtoken($arrArgument, $type)
+{
     $mail = array(
         'type' => $type,
         'token' => $arrArgument['token'],
-        'inputEmail' => $arrArgument['email']
+        'inputEmail' => $arrArgument['email'],
     );
     set_error_handler('ErrorHandler');
     try {
         enviar_email($mail);
+
         return true;
     } catch (Exception $e) {
         return false;

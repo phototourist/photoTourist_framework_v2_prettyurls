@@ -1,7 +1,4 @@
 <?php
-    //require(LIBS . 'PHPMailer_v5.1/class.phpmailer.php');
-    //require(LIBS . 'PHPMailer_v5.1/class.smtp.php');
-
     class email {
         private $body;
         private $address;
@@ -33,15 +30,15 @@
             } catch (phpmailerException $e) {
                 //echo $e->errorMessage();
                 $log = log::getInstance();
-			    $log->add_log_general("error construct email.class.singleton.php", $_GET['module'], "response ".http_response_code());
-			    $log->add_log_user("error construct email.class.singleton.php", "", $_GET['module'], "response ".http_response_code());
+			          $log->add_log_general("error construct email.class.singleton.php", $_GET['module'], "response ".http_response_code());
+			          $log->add_log_user("error construct email.class.singleton.php", "", $_GET['module'], "response ".http_response_code());
 
                 throw new Exception();
             } catch (Exception $e) {
                 //echo $e->getMessage();
                 $log = log::getInstance();
-			    $log->add_log_general("error construct email.class.singleton.php", $_GET['module'], "response ".http_response_code());
-			    $log->add_log_user("error construct email.class.singleton.php", "", $_GET['module'], "response ".http_response_code());
+			          $log->add_log_general("error construct email.class.singleton.php", $_GET['module'], "response ".http_response_code());
+			          $log->add_log_user("error construct email.class.singleton.php", "", $_GET['module'], "response ".http_response_code());
 
                 throw new Exception();
             }
@@ -79,14 +76,14 @@
                 */
             } catch (phpmailerException $e) {
                 $log = log::getInstance();
-			    $log->add_log_general("error enviar email.class.singleton.php", $_GET['module'], "response ".http_response_code());
-			    $log->add_log_user("error enviar email.class.singleton.php", "", $_GET['module'], "response ".http_response_code());
+			          $log->add_log_general("error enviar email.class.singleton.php", $_GET['module'], "response ".http_response_code());
+			          $log->add_log_user("error enviar email.class.singleton.php", "", $_GET['module'], "response ".http_response_code());
 
                 return 0;
             } catch (Exception $e) {
                 $log = log::getInstance();
-			    $log->add_log_general("error enviar email.class.singleton.php", $_GET['module'], "response ".http_response_code());
-			    $log->add_log_user("error enviar email.class.singleton.php", "", $_GET['module'], "response ".http_response_code());
+			          $log->add_log_general("error enviar email.class.singleton.php", $_GET['module'], "response ".http_response_code());
+			          $log->add_log_user("error enviar email.class.singleton.php", "", $_GET['module'], "response ".http_response_code());
 
                 return 0;
             }

@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `photoTouristBD` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `photoTouristBD`;
--- MySQL dump 10.13  Distrib 5.5.50, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.53, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: photoTouristBD
+-- Host: 127.0.0.1    Database: photoTouristBD
 -- ------------------------------------------------------
--- Server version	5.5.49-0+deb8u1
+-- Server version	5.5.53-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -107,7 +107,7 @@ CREATE TABLE `users` (
   `last_name` varchar(100) DEFAULT NULL,
   `birth_date` varchar(10) DEFAULT NULL,
   `title_date` varchar(45) DEFAULT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL DEFAULT '',
   `address` varchar(100) DEFAULT NULL,
   `user` varchar(50) DEFAULT NULL,
   `pass` varchar(100) DEFAULT NULL,
@@ -123,9 +123,11 @@ CREATE TABLE `users` (
   `tipo` varchar(45) DEFAULT NULL,
   `activado` tinyint(4) DEFAULT NULL,
   `token` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`email`),
+  `id_facebook` int(25) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +136,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('Vicente','Vicens','01/12/1985','01/12/2000','vieslo82@gmail.com','Gomis n8 pt6','vicente','$2y$10$MuteXt2peVw.RqEUXFtqg.16rYIBiIvmsJEYyJYuDQ0w2ifg4jRt6','B1',0,0,0,0,'/photoTourist_framework_v2_prettyurls/media/1238267701-flowers.png','ES','15','Adragonte (santiago)','client',1,'Verf78f9bfd8de9ee1d9753b013a282038c'),('Vicente','Esparza','','','vieslo@hotmail.es','','','','',0,0,0,0,'https://graph.facebook.com/1758636407730379/picture','','','','client',1,'1758636407730379'),('','','','','wozniak@hihi.es','','','$2y$10$.tho9j7ZPUvUxTQeii.e5.a42C/iM8QGwWWxjiTnEMca5qYhzj6Fq','',0,0,0,0,'https://www.gravatar.com/avatar/8445ae66763802e315dc48322656e7be8445ae66763802e315dc48322656e7be?s=400&d=identicon&r=g','','','','client',0,'Ver6e2bfbcad3f8b70c437bc5dfec361f45');
+INSERT INTO `users` VALUES ('','','','','wozniak@hihi.es','','','$2y$10$.tho9j7ZPUvUxTQeii.e5.a42C/iM8QGwWWxjiTnEMca5qYhzj6Fq','',0,0,0,0,'https://www.gravatar.com/avatar/8445ae66763802e315dc48322656e7be8445ae66763802e315dc48322656e7be?s=400&d=identicon&r=g','','','','client',0,'Ver6e2bfbcad3f8b70c437bc5dfec361f45',NULL,2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -147,4 +149,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-19 20:26:54
+-- Dump completed on 2017-01-08 21:26:58

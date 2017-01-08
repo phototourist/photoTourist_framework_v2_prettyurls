@@ -46,6 +46,10 @@
     //utils
     define('UTILS',SITE_ROOT.'utils/');
 
+		//model main
+		define('HOME_CSS_PATH', SITE_PATH . '/modules/main/view/css/');
+		define('HOME_JS_PATH', SITE_PATH . '/modules/main/view/js/');
+
 		//model users
 	  define('FUNCTIONS_USERS', SITE_ROOT.'modules/users/utils/');
 	  define('MODEL_PATH_USERS', SITE_ROOT.'modules/users/model/');

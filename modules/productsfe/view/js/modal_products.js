@@ -5,7 +5,7 @@ $(document).ready(function () {
         var id = this.getAttribute('id');
         //alert(id);
         console.log(id);
-          $.post("../../productsfe/idProduct/", {'idProduct': id}, function (data, status) {
+          $.post("../productsfe/idProduct/", {'idProduct': id}, function (data, status) {
         //$.get("index.php?module=products_FE&function=idProduct&idProduct=" + id, function (data, status) {
             var json = JSON.parse(data);
             var product = json.product;
@@ -17,7 +17,7 @@ $(document).ready(function () {
             $('.pagination').html('');
 
             var img_product = document.getElementById('img_product');
-            img_product.innerHTML = '<img src="../../' + product.Avatar + '" class="img-product"> ';
+            img_product.innerHTML = '<img src="../' + product.Avatar + '" class="img-product"> ';
 
             var nom_product = document.getElementById('nom_product');
             nom_product.innerHTML = product.Products_name;
@@ -33,9 +33,9 @@ $(document).ready(function () {
                 .fail(function (xhr) {
                     //if  we already have an error 404
                     if (xhr.status === 404) {
-                        $("#results").load("../../productsfe/view_error/", {'view_error': false});
+                        $("#results").load("../productsfe/view_error/", {'view_error': false});
                     } else {
-                        $("#results").load("../../productsfe/view_error/", {'view_error': true});
+                        $("#results").load("../productsfe/view_error/", {'view_error': true});
                     }
                     ;
                 });

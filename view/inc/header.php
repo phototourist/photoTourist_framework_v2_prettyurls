@@ -33,6 +33,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   <!-- Código para definir estilo CSS general de la página-->
 	<link href="<?php echo CSS_PATH ?>style.css" rel='stylesheet' type='text/css' />
 
+	<!-- Código para definir estilo CSS de Home-->
+	<link href="<?php echo HOME_CSS_PATH ?>style.css" rel='stylesheet' type='text/css' />
+	<link href="<?php echo HOME_CSS_PATH ?>swipebox.css" rel='stylesheet' type='text/css' />
+
 	<!-- Código para definir estilo CSS de geolocalización-->
 	<link href="<?php echo CAMTOURIST_CSS_PATH ?>geolocation.css" rel='stylesheet' type='text/css' />
 
@@ -48,6 +52,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 	<!-- Código para Tipografías Especiales de Google Font-->
 	<link href="https://fonts.googleapis.com/css?family=Unica+One" rel="stylesheet">
+
+	<!-- Llamada al función efectos fotos home---->
+	<script type="text/javascript" src="<?php echo HOME_JS_PATH ?>jquery.swipebox.min.js"></script>
 
 	<!-- Llamada al main.js donde está la función amigable---->
   <script type="text/javascript" src="<?php echo JS_PATH ?>main.js"></script>
@@ -79,6 +86,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</script>
 	<!--FIN DatePicker-->
 
+	<!--Script para Galeria Fotos Main-->
+			    <script type="text/javascript">
+					jQuery(function($) {
+						$(".swipebox").swipebox();
+					});
+					</script>
+<!--FIN Galeria Fotos Main-->
 
 	<script type="text/javascript">
 				jQuery(document).ready(function($) {

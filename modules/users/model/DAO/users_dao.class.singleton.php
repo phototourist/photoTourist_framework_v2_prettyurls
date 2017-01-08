@@ -31,6 +31,7 @@ class users_dao{
         $poblacion = $arrArgument['poblacion'];
         $tipo = $arrArgument['tipo'];
         $token = $arrArgument['token'];
+        $id_facebook = $arrArgument['id_facebook'];
         if ($arrArgument['activado'])
             $activado = $arrArgument['activado'];
         else
@@ -59,11 +60,11 @@ class users_dao{
         $sql = 'INSERT INTO users (name, last_name, birth_date, title_date,'
                 .' address, user, pass, email, en_lvl,Computing,History,'
                 .' Magic,Music,avatar,pais,provincia, poblacion,'
-                .' tipo,token,activado)'
+                .' tipo, token, id_facebook, activado)'
                 ." VALUES ('$name', '$last_name', '$birth_date','$title_date', "
                 ." '$address', '$user', '$pass', '$email', '$en_lvl', '$computing', '$history', "
                 ." '$magic', '$music', '$avatar', '$pais', '$provincia', '$poblacion',"
-                ." '$tipo', '$token','$activado')";
+                ." '$tipo', '$token','$id_facebook', '$activado')";
 
         return $db->ejecutar($sql);
     }

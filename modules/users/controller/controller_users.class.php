@@ -46,9 +46,17 @@
               $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', array('column' => array('email'), 'like' => array($arrArgument['email'])));
                   if ($arrValue[0]['total'] == 1) {
                       //Tenemos 1 User con email que buscamos
-                      $arrValue = false;
-                      $typeErr = 'Email';
-                      $error = 'Email ya registrado';
+                      $arrValue2 = loadModel(MODEL_USERS, 'users_model', 'count', array('column' => array('email'), 'like' => array($arrArgument['email']), 'column' => array('pass'), 'like' => array('')));
+
+                      if ($arrValue2[0]['total'] == 1) {
+                          $arrValue = false;
+                          $typeErr = 'Email';
+                          $error = 'Usuario registrado con FB. Loguéase con FB y ponga una contraseña en su profile.';
+                      } else {
+                          $arrValue = false;
+                          $typeErr = 'Email';
+                          $error = 'Email ya registrado';
+                      }
                   }
               } catch (Exception $e) {
                   $arrValue = false;
@@ -74,7 +82,7 @@
               if ($arrValue) {
                   //Si todo el proceso es CORRECTO enviamos Token y redireccionamos
                 sendtoken($arrArgument, 'alta');
-                $url = amigable('?module=main&function=begin&param=reg', true);
+                  $url = amigable('?module=main&function=begin&param=reg', true);
                 //$url = amigable('?module=users&function=profile', true);
 
                   $jsondata['success'] = true;
@@ -121,14 +129,13 @@
               restore_error_handler();
 
               if ($value) {
-                require_once VIEW_PATH_INC.'header.php';
-                require_once VIEW_PATH_INC.'menu.php';
+                  require_once VIEW_PATH_INC.'header.php';
+                  require_once VIEW_PATH_INC.'menu.php';
 
-                echo '<br><br>';
-                loadView('modules/main/view/', 'main.php');
+                  echo '<br><br>';
+                  loadView('modules/main/view/', 'main.php');
 
-                require_once VIEW_PATH_INC.'footer.html';
-
+                  require_once VIEW_PATH_INC.'footer.html';
               } else {
                   showErrorPage(1, '', 'HTTP/1.0 503 Service Unavailable', 503);
               }
@@ -142,29 +149,71 @@
     public function social_signin()
     { //utilitzada per Facebook i Twitter
         $user = json_decode($_POST['user'], true);
-        if (isset($user['twitter']) && $user['twitter']) {
+        /*if (isset($user['twitter']) && $user['twitter']) {
             //Ahora no estamos utilizando
             $user['apellidos'] = '';
             $user['email'] = '';
             $mail = $user['user_id'].'@gmail.com';
-        }
+        }*/
         set_error_handler('ErrorHandler');
         try {
-            $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', array('column' => array('email'), 'like' => array($user['email'])));
+            $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', array('column' => array('id_facebook'), 'like' => array($user['id_facebook'])));
         } catch (Exception $e) {
             $arrValue = false;
         }
-        restore_error_handler();
 
+        // no existe id_facebook
         if (!$arrValue[0]['total']) {
+            try {
+                $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', array('column' => array('email'), 'like' => array($user['email'])));
+            } catch (Exception $e) {
+                $arrValue = false;
+            }
+          // existe un usuario con el mail
+          if ($arrValue[0]['total']) {
+              // actualizar el id_facebook
+            set_error_handler('ErrorHandler');
+              $arrArgument = array(
+              'id_facebook' => $user['id_facebook'], );
+
+              $arrayDatos = array(
+               'column' => array(
+                 'email',
+               ),
+               'like' => array($user['email']),
+            );
+
+              $j = 0;
+              foreach ($arrArgument as $clave => $valor) {
+                  if ($valor != '') {
+                      $arrayDatos['field'][$j] = $clave;
+                      $arrayDatos['new'][$j] = $valor;
+                      ++$j;
+                  }
+              }
+              loadModel(MODEL_USERS, 'users_model', 'update_user', $arrayDatos);
+              restore_error_handler();
+
+              set_error_handler('ErrorHandler');
+              $arrArgument = array(
+                'email' => $user['email'],
+                'select' => '*',
+            );
+              $user = loadModel(MODEL_USERS, 'users_model', 'select', $arrArgument);
+              echo json_encode($user[0]);
+              restore_error_handler();
+          } else {
+              //crear usuario
             if ($user['email']) {
-                $avatar = 'https://graph.facebook.com/'.($user['token']).'/picture';
+                //ANTES ESTABA token Y NO id_facebook
+                $avatar = 'https://graph.facebook.com/'.($user['id_facebook']).'/picture';
             } else {
                 $avatar = get_gravatar($mail, $s = 400, $d = 'identicon', $r = 'g', $img = false, $atts = array());
             }
 
+            //ANTES ESTABA token Y NO id_facebook
             $arrArgument = array(
-                'token' => $user['token'],
+                'id_facebook' => $user['id_facebook'],
                 'name' => $user['name'],
                 'last_name' => $user['last_name'],
                 'email' => $user['email'],
@@ -173,30 +222,38 @@
                 'activado' => '1',
             );
 
-            set_error_handler('ErrorHandler');
-            try {
-                $value = loadModel(MODEL_USERS, 'users_model', 'create_user', $arrArgument);
-            } catch (Exception $e) {
-                echo json_encode('Exception = '.$e->getMessage()); //Devuelve el mensaje de Excepción en formato cadena
+              set_error_handler('ErrorHandler');
+              try {
+                  $value = loadModel(MODEL_USERS, 'users_model', 'create_user', $arrArgument);
+              } catch (Exception $e) {
+                  echo json_encode('Exception = '.$e->getMessage()); //Devuelve el mensaje de Excepción en formato cadena
                 $value = false;
-            }
-            restore_error_handler();
-        } else {
-            $value = true;
-        }
+              }
+              restore_error_handler();
 
-        if ($value) {
+              if ($value) {
+                  set_error_handler('ErrorHandler');
+                  $arrArgument = array(
+                    'email' => $user['email'],
+                    'select' => '*',
+                );
+                  $user = loadModel(MODEL_USERS, 'users_model', 'select', $arrArgument);
+                  echo json_encode($user[0]);
+                  restore_error_handler();
+              } else {
+                  $jsondata['error'] = 'Error al crear el usuario';
+                  echo json_encode($jsondata);
+              }
+          }
+        } else {
             set_error_handler('ErrorHandler');
             $arrArgument = array(
-                'email' => $user['email'],
-                'select' => '*',
-            );
+              'id_facebook' => $user['id_facebook'],
+              'select' => '*',
+          );
             $user = loadModel(MODEL_USERS, 'users_model', 'select', $arrArgument);
             echo json_encode($user[0]);
             restore_error_handler();
-        } else {
-            $jsondata['error'] = 'Error al crear el usuario';
-            echo json_encode($jsondata);
         }
     }//FIN Redes sociales
 
@@ -246,7 +303,6 @@
                       echo json_encode($jsondata);
                     //  $url = amigable('?module=main&function=begin&param=reg', true);
                     //  $jsondata["redirect"] = $url;
-
                   } else {
                       $jsondata['error'] = 'Password incorrecto';
                       echo json_encode($jsondata);
@@ -297,9 +353,9 @@
 
       public function profile_filler()
       {
-        //echo json_encode('email1 = ' . $_POST['email']);
+          //echo json_encode('email1 = ' . $_POST['email']);
           if (isset($_POST['email'])) {
-            //echo json_encode('email2 = ' . $_POST['email']);
+              //echo json_encode('email2 = ' . $_POST['email']);
               set_error_handler('ErrorHandler');
               try {
                   $arrArgument = array(
@@ -338,16 +394,16 @@
       {
           //if ((isset($_GET['load_country'])) && ($_GET['load_country'] == true)) {
               $json = array();
-              $url = 'http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso/ListOfCountryNamesByName/JSON';
-              set_error_handler('ErrorHandler');
+          $url = 'http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso/ListOfCountryNamesByName/JSON';
+          set_error_handler('ErrorHandler');
 
-              try {
-                  $json = loadModel(MODEL_USERS, 'users_model', 'obtain_paises', $url);
-              } catch (Exception $e) {
-                  $json = array();
+          try {
+              $json = loadModel(MODEL_USERS, 'users_model', 'obtain_paises', $url);
+          } catch (Exception $e) {
+              $json = array();
                   //$json = false;
-              }
-              restore_error_handler();
+          }
+          restore_error_handler();
 
         //FUNCION DE TONI para comprobar si la url de pais está disponible
             if (stristr($json, 'error')) {
@@ -362,7 +418,6 @@
                     exit;
                 }
             }
-          
       }
 
       public function load_provinces_users()
@@ -370,25 +425,24 @@
 
          //if ((isset($_GET['load_provinces'])) && ($_GET['load_provinces'] == true)) {
               $jsondata = array();
+          $json = array();
+          set_error_handler('ErrorHandler');
+
+          try {
+              $json = loadModel(MODEL_USERS, 'users_model', 'obtain_provincias');
+          } catch (Exception $e) {
               $json = array();
-              set_error_handler('ErrorHandler');
+          }
 
-              try {
-                  $json = loadModel(MODEL_USERS, 'users_model', 'obtain_provincias');
-              } catch (Exception $e) {
-                  $json = array();
-              }
-
-              if ($json) {
-                  $jsondata['provincias'] = $json;
-                  echo json_encode($jsondata);
-                  exit;
-              } else {
-                  $jsondata['provincias'] = 'error';
-                  echo json_encode($jsondata);
-                  exit;
-              }
-
+          if ($json) {
+              $jsondata['provincias'] = $json;
+              echo json_encode($jsondata);
+              exit;
+          } else {
+              $jsondata['provincias'] = 'error';
+              echo json_encode($jsondata);
+              exit;
+          }
       }
 
       public function load_towns_users()
@@ -415,21 +469,38 @@
                   exit;
               }
           }
-        }
+      }
           //.-.-.-.-.-.-.-.-.-.-.-.-.-.-.--.-.--.-.-.-.-.-.-.-.-.--.-.-.
 
-    function modify()
+    public function modify()
     {
-
         $jsondata = array();
         $userJSON = json_decode($_POST['mod_user_json'], true);
         //$userJSON['password2'] = $userJSON['password'];
         $result = validate_user_modify_PHP($userJSON);
         //json_encode('$result = ' . $result);
 
-
         if ($result['resultado']) {
-            $arrArgument = array(
+            if ($result['datos']['pass'] === '') {
+                $arrArgument = array(
+              'name' => ucfirst($result['datos']['name']),
+              'last_name' => ucfirst($result['datos']['last_name']),
+              'birth_date' => $result['datos']['birth_date'],
+              'title_date' => $result['datos']['title_date'],
+              'address' => $result['datos']['address'],
+              'user' => $result['datos']['user'],
+              'email' => $result['datos']['email'],
+              //'pass' => password_hash($result['datos']['pass'], PASSWORD_BCRYPT),
+              'en_lvl' => strtoupper($result['datos']['en_lvl']),
+              //'interests' => $result['datos']['interests'],
+             'avatar' => $_SESSION['avatar']['datos'],
+             'pais' => ucfirst($result['datos']['pais']),
+             'provincia' => ucfirst($result['datos']['provincia']),
+              'poblacion' => ucfirst($result['datos']['poblacion']),
+            //  'tipo' => $result['datos']['tipo'],
+            );
+            } else {
+                $arrArgument = array(
               'name' => ucfirst($result['datos']['name']),
               'last_name' => ucfirst($result['datos']['last_name']),
               'birth_date' => $result['datos']['birth_date'],
@@ -446,52 +517,50 @@
               'poblacion' => ucfirst($result['datos']['poblacion']),
             //  'tipo' => $result['datos']['tipo'],
             );
-
+            }
             $arrayDatos = array(
-               "column" => array(
-                 'email'
+               'column' => array(
+                 'email',
                ),
-               "like" => array($arrArgument['email']),
+               'like' => array($arrArgument['email']),
            );
 
-           $j = 0;
-           foreach ($arrArgument as $clave => $valor) {
-               if ($valor != '') {
-                   $arrayDatos['field'][$j] = $clave;
-                   $arrayDatos['new'][$j] = $valor;
+            $j = 0;
+            foreach ($arrArgument as $clave => $valor) {
+                if ($valor != '') {
+                    $arrayDatos['field'][$j] = $clave;
+                    $arrayDatos['new'][$j] = $valor;
                     ++$j;
                 }
             }
 
             set_error_handler('ErrorHandler');
-           try {
-               $arrValue = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrayDatos);
-           } catch (Exception $e) {
-               $arrValue = false;
-           }
-           restore_error_handler();
+            try {
+                $arrValue = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrayDatos);
+            } catch (Exception $e) {
+                $arrValue = false;
+            }
+            restore_error_handler();
 
-           if($arrValue){
-           $jsondata["hola"] = $arrayDatos;
-           $jsondata['success'] = true;
-           $jsondata{"redirect"} = amigable('?module=users&function=profile&param=done', true);
-             echo json_encode($jsondata);
-             exit;
-             }else {
+            if ($arrValue) {
+                $jsondata['hola'] = $arrayDatos;
+                $jsondata['success'] = true;
+                $jsondata{'redirect'} = amigable('?module=users&function=profile&param=done', true);
+                echo json_encode($jsondata);
+                exit;
+            } else {
                 $jsondata['success'] = false;
                 $jsondata['redirect'] = $url = amigable('?module=users&function=profile&param=503', true);
                 echo json_encode($jsondata);
             }
-
-             }else{
-           $jsondata['success'] = false;
-              $jsondata['datos'] = $result;
-              echo json_encode($jsondata);
-         }
-      }
+        } else {
+            $jsondata['success'] = false;
+            $jsondata['datos'] = $result;
+            echo json_encode($jsondata);
+        }
+    }
             //FIN Profile
       //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-
 
       //.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
@@ -499,14 +568,12 @@
       //NO ESTA IMPLEMENTADA VISTAS vacías SOLO CÓDIGO COPIADO
       public function restore()
       {
+          require_once VIEW_PATH_INC.'header.php';
+          require_once VIEW_PATH_INC.'menu.php';
 
-        require_once VIEW_PATH_INC.'header.php';
-        require_once VIEW_PATH_INC.'menu.php';
+          loadView('modules/users/view/', 'restore.php');
 
-        loadView('modules/users/view/', 'restore.php');
-
-        require_once VIEW_PATH_INC.'footer.html';
-
+          require_once VIEW_PATH_INC.'footer.html';
       }
 
       public function process_restore()
@@ -538,7 +605,7 @@
                   );
                   $arrValue = loadModel(MODEL_USERS, 'users_model', 'count', $arrArgument);
                   if ($arrValue[0]['total'] == 1) {
-                    set_error_handler('ErrorHandler');
+                      set_error_handler('ErrorHandler');
                       $arrValue = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrArgument);
 
                       if ($arrValue) {
@@ -563,28 +630,22 @@
           restore_error_handler();
       }
 
+      public function changepass()
+      {
+          if (substr($_GET['param'], 0, 3) == 'Cha') {
+              require_once VIEW_PATH_INC.'header.php';
+              require_once VIEW_PATH_INC.'menu.php';
 
-      function changepass() {
-          if (substr($_GET['param'], 0, 3) == "Cha") {
+              loadView('modules/users/view/', 'changepass.php');
 
-            require_once VIEW_PATH_INC.'header.php';
-            require_once VIEW_PATH_INC.'menu.php';
-
-            loadView('modules/users/view/', 'changepass.php');
-
-            require_once VIEW_PATH_INC.'footer.html';
-
-
+              require_once VIEW_PATH_INC.'footer.html';
           } else {
-              showErrorPage(1, "", 'HTTP/1.0 503 Service Unavailable', 503);
+              showErrorPage(1, '', 'HTTP/1.0 503 Service Unavailable', 503);
           }
       }
 
       public function update_pass()
       {
-
-
-
           $jsondata = array();
           $pass = json_decode($_POST['passw'], true);
 
@@ -599,25 +660,23 @@
         //  echo json_encode($jsondata);
           //exit;
 
-
           set_error_handler('ErrorHandler');
 
           try {
               $value = loadModel(MODEL_USERS, 'users_model', 'update_user', $arrArgument);
-              } catch (Exception $e) {
-
+          } catch (Exception $e) {
               $value = false;
           }
           restore_error_handler();
 
           if ($value) {
-              $url =  amigable("?module=main&function=begin" , true);
+              $url = amigable('?module=main&function=begin', true);
               $jsondata['success'] = true;
               $jsondata['redirect'] = $url;
               echo json_encode($jsondata);
               exit;
           } else {
-              $url =  amigable('?module=main&function=begin&param=503', true);
+              $url = amigable('?module=main&function=begin&param=503', true);
               $jsondata['success'] = true;
               $jsondata['redirect'] = $url;
               echo json_encode($jsondata);
@@ -625,5 +684,4 @@
           }
       }
       //FIN restaurar Contraseña
-
   }

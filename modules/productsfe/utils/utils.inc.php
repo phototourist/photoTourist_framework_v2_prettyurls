@@ -57,7 +57,7 @@ function paint_template_products($arrData) {
 
           print('<div class="media">');
           print('<div class="pull-left">');
-          print('<img src="../../' . $product['Avatar'] . '" class="icon-md" height="80" width="80">');
+          print('<img src="../' . $product['Avatar'] . '" class="icon-md" height="80" width="80">');
           print('</div>');
           print('<div class="media-body">');
           print('<h3 class="media-heading">' . $product['Products_name'] . '</h3>');

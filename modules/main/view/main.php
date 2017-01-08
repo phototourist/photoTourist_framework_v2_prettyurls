@@ -85,6 +85,73 @@
 	</div>
 </div>
 <!--advantage-->
+
+<!---->
+<div class="solutions">
+<div class="container">
+	<div class="solutions-top">
+		<h3><span>O</span>ur Latest gallery</h3>
+	</div>
+	<div class="gallery-grids">
+		<div class="top-gallery">
+		<div class="col-md-3 gallery-grid gallery1">
+			<a href="<?php echo IMG_PATH ?>p1.jpg" class="swipebox"><img src="<?php echo IMG_PATH ?>p1.jpg" class="img-responsive" alt="/">
+			<div class="textbox">
+				<img src="<?php echo IMG_PATH ?>magnify.png" class="img-responsive" alt="/">
+			</div>
+		</div></a>
+			<div class="col-md-3 gallery-grid gallery1">
+			<a href="<?php echo IMG_PATH ?>p2.jpg" class="swipebox"><img src="<?php echo IMG_PATH ?>p2.jpg" class="img-responsive" alt="/">
+			<div class="textbox">
+			<img src="<?php echo IMG_PATH ?>magnify.png" class="img-responsive" alt="/">
+			</div>
+			</div></a>
+			<div class="col-md-3 gallery-grid gallery1">
+			<a href="<?php echo IMG_PATH ?>p3.jpg" class="swipebox"><img src="<?php echo IMG_PATH ?>p3.jpg" class="img-responsive" alt="/">
+			<div class="textbox">
+			<img src="<?php echo IMG_PATH ?>magnify.png" class="img-responsive" alt="/">
+			</div>
+			</div></a>
+			<div class="col-md-3 gallery-grid gallery1">
+			<a href="<?php echo IMG_PATH ?>p4.jpg" class="swipebox"><img src="<?php echo IMG_PATH ?>p4.jpg" class="img-responsive" alt="/">
+			<div class="textbox">
+			<img src="<?php echo IMG_PATH ?>magnify.png" class="img-responsive" alt="/">
+			</div>
+			</div></a>
+			<div class="clearfix"> </div>
+			</div>
+			<div class="bottom-gallery">
+		<div class="col-md-3 gallery-grid gallery1">
+			<a href="<?php echo IMG_PATH ?>p5.jpg" class="swipebox"><img src="<?php echo IMG_PATH ?>p5.jpg" class="img-responsive" alt="/">
+			<div class="textbox">
+			<img src="<?php echo IMG_PATH ?>magnify.png" class="img-responsive" alt="/">
+			</div>
+			</div></a>
+			<div class="col-md-3 gallery-grid gallery1">
+			<a href="<?php echo IMG_PATH ?>p6.jpg" class="swipebox"><img src="<?php echo IMG_PATH ?>p6.jpg" class="img-responsive" alt="/">
+			<div class="textbox">
+			<img src="<?php echo IMG_PATH ?>magnify.png" class="img-responsive" alt="/">
+			</div>
+			</div></a>
+			<div class="col-md-3 gallery-grid gallery1">
+			<a href="<?php echo IMG_PATH ?>p7.jpg" class="swipebox"><img src="<?php echo IMG_PATH ?>p7.jpg" class="img-responsive" alt="/">
+			<div class="textbox">
+			<img src="<?php echo IMG_PATH ?>magnify.png" class="img-responsive" alt="/">
+			</div>
+			</div></a>
+			<div class="col-md-3 gallery-grid gallery1">
+			<a href="<?php echo IMG_PATH ?>p8.jpg" class="swipebox"><img src="<?php echo IMG_PATH ?>p8.jpg" class="img-responsive" alt="/">
+			<div class="textbox">
+			<img src="<?php echo IMG_PATH ?>magnify.png" class="img-responsive" alt="/">
+			</div>
+			</div></a>
+			<div class="clearfix"> </div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+<!---->
 <!--solutions-->
 <div class="solutions">
 	<div class="container">
